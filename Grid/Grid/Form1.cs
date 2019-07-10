@@ -211,7 +211,7 @@ namespace Grid
                 b2 = 0;
             }
             this.doubleBufferDataGridView1.ClearSelection();
-            doubleBufferDataGridView1.Rows[b2].Cells[a2].Style.BackColor = Color.FromArgb(R, G, B);
+            doubleBufferDataGridView1.Rows[b2].Cells[a2].Style.BackColor = Color.Red;
             doubleBufferDataGridView1.Rows[b2].Cells[a2].Selected = true;
 
             doubleBufferDataGridView1.CurrentCell = doubleBufferDataGridView1.Rows[b2].Cells[a2];
@@ -301,6 +301,10 @@ namespace Grid
         private void button4_Click(object sender, EventArgs e)
         {
 
+            int k = 0;
+            int kk = ++k + k++ + ++k + k + k++;
+            textBox4.Text = kk.ToString();
+
             ConvertDataSetToXMLFile(doubleBufferDataGridView1);
             //Random randomX = new Random();
             //Random randomY = new Random();
@@ -327,7 +331,7 @@ namespace Grid
                 DataRow dr = dt.NewRow();
                 for (int countsub = 0; countsub < dgv.Columns.Count; countsub++)
                 {
-                    dr[countsub] = Convert.ToString(dgv.Rows[count].Cells[countsub].Value);
+                    dr[countsub] = Convert.ToString(dgv.Rows[count].Cells[countsub].Style.BackColor.Name);
                 }
                 dt.Rows.Add(dr);
             }
@@ -335,9 +339,9 @@ namespace Grid
             try
             {
                 dt.TableName = "TEST";
-              string sFileName = "Data_" + DateTime.Now.ToString("yyyyMMddHHmmss");
+              string sFileName = "Data";
 
-                dt.WriteXml("D:/ "+sFileName +".xml",XmlWriteMode.WriteSchema);
+                dt.WriteXml("D:/ "+sFileName +".xml");
                 MessageBox.Show("数据成功保存到" + "D:/ " + sFileName + ".xml", "系统提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (System.Exception ex)

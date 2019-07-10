@@ -49,7 +49,8 @@ namespace Grid
             this.button3 = new System.Windows.Forms.Button();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.button4 = new System.Windows.Forms.Button();
-            this.doubleBufferDataGridView1 = new DoubleBufferDataGridView();
+            this.doubleBufferDataGridView1 = new Grid.DoubleBufferDataGridView();
+            this.textBox4 = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.doubleBufferDataGridView1)).BeginInit();
             this.SuspendLayout();
@@ -136,11 +137,19 @@ namespace Grid
             this.doubleBufferDataGridView1.TabIndex = 10;
             this.doubleBufferDataGridView1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.GridView_MouseMove);
             // 
+            // textBox4
+            // 
+            this.textBox4.Location = new System.Drawing.Point(1188, 30);
+            this.textBox4.Name = "textBox4";
+            this.textBox4.Size = new System.Drawing.Size(111, 21);
+            this.textBox4.TabIndex = 11;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1589, 810);
+            this.Controls.Add(this.textBox4);
             this.Controls.Add(this.doubleBufferDataGridView1);
             this.Controls.Add(this.button4);
             this.Controls.Add(this.pictureBox1);
@@ -170,6 +179,7 @@ namespace Grid
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Button button4;
         private Grid.DoubleBufferDataGridView doubleBufferDataGridView1;
+        private TextBox textBox4;
     }
 }
 
