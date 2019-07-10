@@ -1,5 +1,18 @@
-﻿namespace Grid
+﻿using System;
+using System.Windows.Forms;
+
+namespace Grid
 {
+    //双缓冲
+    class DoubleBufferDataGridView : DataGridView
+    {
+        public DoubleBufferDataGridView()
+        {
+            SetStyle(ControlStyles.DoubleBuffer | ControlStyles.OptimizedDoubleBuffer | ControlStyles.AllPaintingInWmPaint, true);
+            UpdateStyles();
+        }
+    }
+
     partial class Form1
     {
         /// <summary>
@@ -35,10 +48,10 @@
             this.textBox3 = new System.Windows.Forms.TextBox();
             this.button3 = new System.Windows.Forms.Button();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.button4 = new System.Windows.Forms.Button();
+            this.doubleBufferDataGridView1 = new DoubleBufferDataGridView();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.doubleBufferDataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
             // button1
@@ -97,23 +110,11 @@
             // 
             this.pictureBox1.Location = new System.Drawing.Point(12, 94);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(1012, 315);
+            this.pictureBox1.Size = new System.Drawing.Size(1012, 283);
             this.pictureBox1.TabIndex = 7;
             this.pictureBox1.TabStop = false;
             this.pictureBox1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseDown);
             this.pictureBox1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseMove);
-            // 
-            // dataGridView1
-            // 
-            this.dataGridView1.AllowUserToAddRows = false;
-            this.dataGridView1.AllowUserToDeleteRows = false;
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(12, 415);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.ReadOnly = true;
-            this.dataGridView1.RowTemplate.Height = 23;
-            this.dataGridView1.Size = new System.Drawing.Size(1012, 370);
-            this.dataGridView1.TabIndex = 8;
             // 
             // button4
             // 
@@ -125,13 +126,23 @@
             this.button4.UseVisualStyleBackColor = true;
             this.button4.Click += new System.EventHandler(this.button4_Click);
             // 
+            // doubleBufferDataGridView1
+            // 
+            this.doubleBufferDataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.doubleBufferDataGridView1.Location = new System.Drawing.Point(12, 394);
+            this.doubleBufferDataGridView1.Name = "doubleBufferDataGridView1";
+            this.doubleBufferDataGridView1.RowTemplate.Height = 23;
+            this.doubleBufferDataGridView1.Size = new System.Drawing.Size(1012, 291);
+            this.doubleBufferDataGridView1.TabIndex = 10;
+            this.doubleBufferDataGridView1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.GridView_MouseMove);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1589, 810);
+            this.Controls.Add(this.doubleBufferDataGridView1);
             this.Controls.Add(this.button4);
-            this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.button3);
             this.Controls.Add(this.textBox3);
@@ -142,7 +153,7 @@
             this.Name = "Form1";
             this.Text = "Form1";
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.doubleBufferDataGridView1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -157,8 +168,8 @@
         private System.Windows.Forms.TextBox textBox3;
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.PictureBox pictureBox1;
-        private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.Button button4;
+        private Grid.DoubleBufferDataGridView doubleBufferDataGridView1;
     }
 }
 

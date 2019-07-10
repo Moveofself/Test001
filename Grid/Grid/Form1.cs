@@ -10,6 +10,7 @@ using System.Windows.Forms;
 
 namespace Grid
 {
+
     public partial class Form1 : Form
     {
 
@@ -22,6 +23,7 @@ namespace Grid
         public float fY;
         public float fPen;
         public int a;
+        public int aa;
         public int b;
 
         public int scale;
@@ -30,7 +32,7 @@ namespace Grid
         {
             InitializeComponent();
             pictureBox1.MouseWheel += new MouseEventHandler(pictureBox1_MouseWheel);
-            
+            this.DoubleBuffered = true;
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)
@@ -44,11 +46,11 @@ namespace Grid
 
         }
 
+        
+
         //画图
         private void button2_Click(object sender, EventArgs e)
         {
-
-
 
             bmp = new Bitmap(pictureBox1.Width - 6, pictureBox1.Height - 6);
             pictureBox1.BorderStyle = BorderStyle.Fixed3D;
@@ -84,19 +86,21 @@ namespace Grid
             pictureBox1.Refresh();
 
 
-            dataGridView1.RowCount = iY;
-            dataGridView1.ColumnCount = iX;
-            dataGridView1.Visible = true;
-            dataGridView1.ReadOnly = true;
-            dataGridView1.RowHeadersVisible = false;
-            dataGridView1.AllowUserToAddRows = false;
-            dataGridView1.ColumnHeadersVisible = false;
-            dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
-            dataGridView1.ClearSelection();
-            dataGridView1.AllowUserToResizeRows = false;
-            dataGridView1.AllowUserToResizeColumns = false;
+            
+            doubleBufferDataGridView1.Visible = true;
+            doubleBufferDataGridView1.ReadOnly = true;
+            doubleBufferDataGridView1.RowHeadersVisible = false;
+            doubleBufferDataGridView1.AllowUserToAddRows = false;
+            doubleBufferDataGridView1.ColumnHeadersVisible = false;
+            doubleBufferDataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
+            //doubleBufferDataGridView1.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCellsExceptHeaders;
 
-            dataGridView1.Columns[0].Width = (int)fX;
+            doubleBufferDataGridView1.ClearSelection();
+            doubleBufferDataGridView1.AllowUserToResizeRows = false;
+            doubleBufferDataGridView1.AllowUserToResizeColumns = false;
+            doubleBufferDataGridView1.RowCount = iY;
+            doubleBufferDataGridView1.ColumnCount = iX;
+            doubleBufferDataGridView1.Columns[0].Width = (int)fX;
         }
 
         void Grid_MouseMove(object sender, MouseEventArgs e)
@@ -145,6 +149,12 @@ namespace Grid
 
 
         }
+        private void GridView_MouseMove(object sender, MouseEventArgs e)
+        {
+            int aX = (int)(e.X / fX);
+            int aY = (int)(e.Y / fY);
+            textBox3.Text = "X轴：" + aX + "Y轴：" + aY;
+        }
 
         private void button3_Click(object sender, EventArgs e)
         {
@@ -175,7 +185,7 @@ namespace Grid
         private void OnTimedEvent(object sender, EventArgs e)
         {
             int a2, b2;
-            //aphics.Clear(Color.White);
+            graphics.Clear(Color.White);
 
             Random ro = new Random(10);
             long tick = DateTime.Now.Ticks;
@@ -188,66 +198,71 @@ namespace Grid
             B = (B > 255) ? 255 : B;
             a2 = a;
             b2 = b;
-            if (a2>=iX)
-            {
-                a2 = 0;
-                b2 = b2 + 1;
-            }
-            if (b2>=iY)
-            {
-                a2 = 0;
-                b2 = 0;
-            }
-            //dataGridView1.Rows[b2].Cells[a2].Style.BackColor = Color.FromArgb(R, G, B);
-            graphics.FillRectangle(new SolidBrush(Color.FromArgb(R, G, B)), a * fX + (fPen / 2), b * fY + (fPen / 2), fX - (fPen / 2), fY - (fPen / 2));
-            pictureBox1.Refresh();
-            a = a + 1;
-            if (a > iX)
-            {
-                a = 0;
-                b = b + 1;
-            }
-            if (b > iY)
-            {
-                a = 0;
-                b = 0;
-                button2_Click(sender, e);
-                //aphics.Clear(Color.White);
-            }
-
-            #region Test
+            //if (a2>=iX)
+            //{
+            //    a2 = 0;
+            //    b2 = b2 + 1;
+            //}
+            //if (b2>=iY)
+            //{
+            //    a2 = 0;
+            //    b2 = 0;
+            //}
+            //this.doubleBufferDataGridView1.ClearSelection();
+            //doubleBufferDataGridView1.Rows[b2].Cells[a2].Style.BackColor = Color.FromArgb(R, G, B);
+            //doubleBufferDataGridView1.Rows[b2].Cells[a2].Selected = true;
+        
+            //doubleBufferDataGridView1.CurrentCell = doubleBufferDataGridView1.Rows[b2].Cells[a2];
+            //graphics.FillRectangle(new SolidBrush(Color.FromArgb(R, G, B)), a * fX + (fPen / 2), b * fY + (fPen / 2), fX - fPen, fY - fPen);
+            //pictureBox1.Refresh();
             //a = a + 1;
-
-            //if (a + 18> iX)
+            //if (a > iX)
             //{
             //    a = 0;
+            //    b = b + 1;
             //}
-
-
-
-            //if (iX >= 5 && iY >= 6)
+            //if (b > iY)
             //{
-            //    for (int i = 0; i < iX; i++)
-            //    {
-            //        for (int j = 0; j < iX; j++)
-            //        {
-            //            if ((i == 0 + a || i == 1 + a || i == 2 + a || i == 3 + a) && (j == 0 || j == 2) || (i == 0 + a) && (j == 1 || j == 3 || j == 4 || j == 5)
-            //                || (i == 5 + a ) && (j == 0 || j ==1 || j == 2 || j == 3 || j == 4) || (i == 8 + a) && (j == 0 || j == 1 || j == 2 || j == 3 || j == 4) || (i == 6 + a || i == 7 + a) && (j == 5)
-            //                || (i == 11 + a || i == 12 + a || i == 13 + a) && (j == 0 ||  j == 5) || (i == 10 + a) && (j == 1 || j == 2 || j == 3 || j == 4)
-            //                || (i == 15 + a) && (j == 0 || j == 1 || j == 2 || j == 3 || j == 4 || j == 5) || (i == 16 + a) && (j == 2 || j == 3)
-            //                || (i == 17 + a) && (j == 1 || j == 4)
-            //                || (i == 18 + a) && (j == 0 || j == 5)
-            //                )
-            //            {
-            //                graphics.FillRectangle(new SolidBrush(Color.FromArgb(R, G, B)), i * fX + (fPen / 2), j * fY + (fPen / 2), fX - (fPen / 2), fY - (fPen / 2));
-            //            }
-            //            else
-            //            {
-            //                //graphics.FillRectangle(new SolidBrush(Color.Red), i * fX + (fPen / 2), j * fY + (fPen / 2), fX - (fPen / 2), fY - (fPen / 2));
-            //            }
-            //        }
-            //    }
+            //    a = 0;
+            //    b = 0;
+            //    button2_Click(sender, e);
+            //    //aphics.Clear(Color.White);
             //}
+
+            #region Test
+            aa = aa + 1;
+
+            if (aa + 18 > iX)
+            {
+                aa = 0;
+            }
+
+
+
+            if (iX >= 5 && iY >= 6)
+            {
+                for (int i = 0; i < iX; i++)
+                {
+                    for (int j = 0; j < iX; j++)
+                    {
+                        if ((i == 0 + aa || i == 1 + aa || i == 2 + aa || i == 3 + aa) && (j == 0 || j == 2) || (i == 0 + aa) && (j == 1 || j == 3 || j == 4 || j == 5)
+                            || (i == 5 + aa) && (j == 0 || j == 1 || j == 2 || j == 3 || j == 4) || (i == 8 + aa) && (j == 0 || j == 1 || j == 2 || j == 3 || j == 4) || (i == 6 + aa || i == 7 + aa) && (j == 5)
+                            || (i == 11 + aa || i == 12 + aa || i == 13 + aa) && (j == 0 || j == 5) || (i == 10 + aa) && (j == 1 || j == 2 || j == 3 || j == 4)
+                            || (i == 15 + aa) && (j == 0 || j == 1 || j == 2 || j == 3 || j == 4 || j == 5) || (i == 16 + aa) && (j == 2 || j == 3)
+                            || (i == 17 + aa) && (j == 1 || j == 4)
+                            || (i == 18 + aa) && (j == 0 || j == 5)
+                            )
+                        {
+                            graphics.FillRectangle(new SolidBrush(Color.FromArgb(R, G, B)), i * fX + (fPen / 2), j * fY + (fPen / 2), fX - fPen, fY -fPen);
+                            pictureBox1.Refresh();
+                        }
+                        else
+                        {
+                            //graphics.FillRectangle(new SolidBrush(Color.Red), i * fX + (fPen / 2), j * fY + (fPen / 2), fX - (fPen / 2), fY - (fPen / 2));
+                        }
+                    }
+                }
+            }
             #endregion
         }
 
@@ -286,7 +301,7 @@ namespace Grid
             Random randomY = new Random();
             int aX = randomX.Next(0,iX);
             int aY = randomY.Next(0, iY);
-            dataGridView1.Rows[aX].Cells[aY].Style.BackColor = Color.Red;
+            doubleBufferDataGridView1.Rows[aX].Cells[aY].Style.BackColor = Color.Red;
 
         }
     }
