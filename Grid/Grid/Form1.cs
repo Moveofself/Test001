@@ -32,7 +32,6 @@ namespace Grid
         {
             InitializeComponent();
             pictureBox1.MouseWheel += new MouseEventHandler(pictureBox1_MouseWheel);
-            this.DoubleBuffered = true;
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)
@@ -151,8 +150,9 @@ namespace Grid
         }
         private void GridView_MouseMove(object sender, MouseEventArgs e)
         {
-            int aX = (int)(e.X / fX);
-            int aY = (int)(e.Y / fY);
+            int aX = this.doubleBufferDataGridView1.HitTest(e.X, e.Y).RowIndex; //行
+            int aY = this.doubleBufferDataGridView1.HitTest(e.X, e.Y).ColumnIndex; //列
+  
             textBox3.Text = "X轴：" + aX + "Y轴：" + aY;
         }
 
