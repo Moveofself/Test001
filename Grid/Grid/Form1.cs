@@ -28,12 +28,18 @@ namespace Grid
         public int aa;
         public int b;
         Timer sTimer = null;
-        public int count=0;
+        public int count = 0;
+
+        public int width;
+        public int height;
+
 
         public Form1()
         {
             InitializeComponent();
             pictureBox1.MouseWheel += new MouseEventHandler(pictureBox1_MouseWheel);
+            width = doubleBufferDataGridView1.Width;
+            height = doubleBufferDataGridView1.Height;
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)
@@ -47,7 +53,7 @@ namespace Grid
 
         }
 
-        
+
 
         //画图
         private void button2_Click(object sender, EventArgs e)
@@ -87,7 +93,7 @@ namespace Grid
             pictureBox1.Refresh();
 
             doubleBufferDataGridView1.Rows.Clear();
-
+            doubleBufferDataGridView1.Columns.Clear();
             doubleBufferDataGridView1.Visible = true;
             doubleBufferDataGridView1.ReadOnly = true;
             doubleBufferDataGridView1.RowHeadersVisible = false;
@@ -100,6 +106,11 @@ namespace Grid
             doubleBufferDataGridView1.AllowUserToResizeColumns = false;
             doubleBufferDataGridView1.RowCount = iY;
             doubleBufferDataGridView1.ColumnCount = iX;
+
+            doubleBufferDataGridView1.Width = doubleBufferDataGridView1.RowHeadersWidth * (doubleBufferDataGridView1.ColumnCount + 1);
+            doubleBufferDataGridView1.Height = doubleBufferDataGridView1.ColumnHeadersHeight * (doubleBufferDataGridView1.ColumnCount + 1);
+
+            textBox6.Text = "宽：" + doubleBufferDataGridView1.Width + "高：" + doubleBufferDataGridView1.Height;
 
             count = listBox1.Items.Count;
 
@@ -160,11 +171,11 @@ namespace Grid
         {
             int aX = this.doubleBufferDataGridView1.HitTest(e.X, e.Y).RowIndex; //行
             int aY = this.doubleBufferDataGridView1.HitTest(e.X, e.Y).ColumnIndex; //列
-            if (aY>=0 && aX>=0)
+            if (aY >= 0 && aX >= 0)
             {
                 textBox5.Text = "X轴：" + aX + "Y轴：" + aY + "宽度：" + this.doubleBufferDataGridView1.Columns[aY].Width + "高度：" + this.doubleBufferDataGridView1.Rows[aX].Height;
             }
-            
+
         }
 
         private void button3_Click(object sender, EventArgs e)
@@ -185,7 +196,7 @@ namespace Grid
             //    }
             //}
 
-            
+
             sTimer = new Timer();
             sTimer.Tick += new EventHandler(OnTimedEvent);
             sTimer.Interval = 100;
@@ -225,7 +236,7 @@ namespace Grid
 
             doubleBufferDataGridView1.CurrentCell = doubleBufferDataGridView1.Rows[b2].Cells[a2];
 
-  
+
 
             textBox5.Text = "X轴：" + b2 + "Y轴：" + a2;
             graphics.FillRectangle(new SolidBrush(Color.FromArgb(R, G, B)), a * fX + (fPen / 2), b * fY + (fPen / 2), fX - fPen, fY - fPen);
@@ -354,7 +365,7 @@ namespace Grid
                 dt.TableName = "TEST";
                 string sFileName = listBox1.SelectedItem.ToString();
 
-                dt.WriteXml("D:/"+sFileName +".xml");
+                dt.WriteXml("D:/" + sFileName + ".xml");
                 MessageBox.Show("数据成功保存到" + "D:/ " + sFileName + ".xml", "系统提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (System.Exception ex)
@@ -363,7 +374,7 @@ namespace Grid
             }
             finally
             {
-                
+
             }
         }
 
@@ -371,7 +382,11 @@ namespace Grid
         {
             int index = listBox1.IndexFromPoint(e.X, e.Y);
             listBox1.SelectedIndex = index;
-            ReadXML(listBox1.SelectedItem.ToString());
+            if (index >= 0)
+            {
+                ReadXML(listBox1.SelectedItem.ToString());
+            }
+
         }
 
         private void ReadXML(string sName)
@@ -382,7 +397,7 @@ namespace Grid
                 //判读是否有StripID
                 if (string.IsNullOrEmpty(sName))
                 {
-                    
+
                     return;
                 }
                 else
@@ -398,7 +413,7 @@ namespace Grid
                 }
                 else
                 {
-                     
+
                     return;
                 }
 
@@ -412,11 +427,11 @@ namespace Grid
                 int i = 0, j = 0;
                 foreach (XmlNode item in root.ChildNodes)
                 {
-                    
+
                     foreach (XmlNode Nodes in item.ChildNodes)
                     {
                         doubleBufferDataGridView1.ClearSelection();
-                        doubleBufferDataGridView1.Rows[i].Cells[j].Style.BackColor = ColorTranslator.FromHtml(Nodes.InnerText=="0"?"White": Nodes.InnerText);
+                        doubleBufferDataGridView1.Rows[i].Cells[j].Style.BackColor = ColorTranslator.FromHtml(Nodes.InnerText == "0" ? "White" : Nodes.InnerText);
                         j++;
                     }
                     j = 0;
@@ -431,16 +446,17 @@ namespace Grid
             }
         }
 
-        private void InitialGrid(int Row,int Column)
+        private void InitialGrid(int Row, int Column)
         {
             if (Row <= 0 && Column <= 0)
             {
                 Row = 5;
-               Column = 5;
+                Column = 5;
             }
 
             //清空
             doubleBufferDataGridView1.Rows.Clear();
+            doubleBufferDataGridView1.Columns.Clear();
             doubleBufferDataGridView1.Visible = true;
             doubleBufferDataGridView1.ReadOnly = true;
             doubleBufferDataGridView1.RowHeadersVisible = false;
@@ -452,6 +468,16 @@ namespace Grid
             doubleBufferDataGridView1.AllowUserToResizeColumns = false;
             doubleBufferDataGridView1.RowCount = Row;
             doubleBufferDataGridView1.ColumnCount = Column;
+
+            int aaaa = doubleBufferDataGridView1.Columns[0].Width * (doubleBufferDataGridView1.ColumnCount)+22;
+            int bbbb = doubleBufferDataGridView1.Rows[0].Height * (doubleBufferDataGridView1.RowCount) + 22;
+
+            doubleBufferDataGridView1.Width = aaaa >= width ? width : aaaa;
+
+            doubleBufferDataGridView1.Height = bbbb >= height ? height : bbbb;
+
+            textBox6.Text = "宽：" + doubleBufferDataGridView1.Width + "高：" + doubleBufferDataGridView1.Height;
+
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -463,6 +489,66 @@ namespace Grid
                 listBox1.Items.Add(A);
             }
             listBox1.SelectedIndex = listBox1.Items.Count - 1;
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            for (int i = 0; i < doubleBufferDataGridView1.ColumnCount; i++)
+            {
+                //doubleBufferDataGridView1.Columns[i].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
+                int widthCol = doubleBufferDataGridView1.Columns[i].Width;
+                doubleBufferDataGridView1.Columns[i].AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+                doubleBufferDataGridView1.Columns[i].Width = widthCol +10;
+            }
+            for (int j = 0; j < doubleBufferDataGridView1.RowCount; j++)
+            {
+                //doubleBufferDataGridView1.Rows[0].a = DataGridViewAutoSizeColumnMode.DisplayedCells;
+                int heightRow = doubleBufferDataGridView1.Rows[j].Height;
+                //doubleBufferDataGridView1.Rows[0].AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+                doubleBufferDataGridView1.Rows[j].Height = heightRow +10;
+            }
+
+            int aaaa = doubleBufferDataGridView1.Columns[0].Width * (doubleBufferDataGridView1.ColumnCount)+22;
+            int bbbb = doubleBufferDataGridView1.Rows[0].Height * (doubleBufferDataGridView1.RowCount)+22;
+
+            doubleBufferDataGridView1.Width = aaaa >= width ? width : aaaa;
+
+            doubleBufferDataGridView1.Height = bbbb >= height ? height : bbbb;
+
+        }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            int width1 = doubleBufferDataGridView1.Columns[0].Width;
+
+            int height1 = doubleBufferDataGridView1.Rows[0].Height;
+
+            if (width1<=10 || height1<=10 )
+            {
+                return;
+            }
+
+            for (int i = 0; i < doubleBufferDataGridView1.ColumnCount; i++)
+            {
+                //doubleBufferDataGridView1.Columns[i].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
+                int widthCol = doubleBufferDataGridView1.Columns[i].Width; 
+                doubleBufferDataGridView1.Columns[i].AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+                doubleBufferDataGridView1.Columns[i].Width = widthCol - 10;
+            }
+            for (int j = 0; j < doubleBufferDataGridView1.RowCount; j++)
+            {
+                //doubleBufferDataGridView1.Rows[0].a = DataGridViewAutoSizeColumnMode.DisplayedCells;
+                int heightRow = doubleBufferDataGridView1.Rows[j].Height;
+                //doubleBufferDataGridView1.Rows[0].AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+                doubleBufferDataGridView1.Rows[j].Height = heightRow - 10;
+            }
+
+            int aaaa = doubleBufferDataGridView1.Columns[0].Width * (doubleBufferDataGridView1.ColumnCount) + 22;
+            int bbbb = doubleBufferDataGridView1.Rows[0].Height * (doubleBufferDataGridView1.RowCount) + 12;
+
+            doubleBufferDataGridView1.Width = aaaa >= width ? width : aaaa;
+
+            doubleBufferDataGridView1.Height = bbbb >= height ? height : bbbb;
         }
     }
 }

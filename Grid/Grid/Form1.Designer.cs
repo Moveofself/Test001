@@ -52,6 +52,9 @@ namespace Grid
             this.textBox4 = new System.Windows.Forms.TextBox();
             this.textBox5 = new System.Windows.Forms.TextBox();
             this.listBox1 = new System.Windows.Forms.ListBox();
+            this.button5 = new System.Windows.Forms.Button();
+            this.textBox6 = new System.Windows.Forms.TextBox();
+            this.button6 = new System.Windows.Forms.Button();
             this.doubleBufferDataGridView1 = new Grid.DoubleBufferDataGridView();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.doubleBufferDataGridView1)).BeginInit();
@@ -148,11 +151,38 @@ namespace Grid
             this.listBox1.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.listBox1.FormattingEnabled = true;
             this.listBox1.ItemHeight = 14;
-            this.listBox1.Location = new System.Drawing.Point(1092, 414);
+            this.listBox1.Location = new System.Drawing.Point(1138, 483);
             this.listBox1.Name = "listBox1";
             this.listBox1.Size = new System.Drawing.Size(158, 102);
             this.listBox1.TabIndex = 13;
             this.listBox1.MouseClick += new System.Windows.Forms.MouseEventHandler(this.listBox1_MouseClick);
+            // 
+            // button5
+            // 
+            this.button5.Location = new System.Drawing.Point(1046, 418);
+            this.button5.Name = "button5";
+            this.button5.Size = new System.Drawing.Size(42, 32);
+            this.button5.TabIndex = 14;
+            this.button5.Text = "放大";
+            this.button5.UseVisualStyleBackColor = true;
+            this.button5.Click += new System.EventHandler(this.button5_Click);
+            // 
+            // textBox6
+            // 
+            this.textBox6.Location = new System.Drawing.Point(900, 61);
+            this.textBox6.Name = "textBox6";
+            this.textBox6.Size = new System.Drawing.Size(255, 21);
+            this.textBox6.TabIndex = 15;
+            // 
+            // button6
+            // 
+            this.button6.Location = new System.Drawing.Point(1046, 481);
+            this.button6.Name = "button6";
+            this.button6.Size = new System.Drawing.Size(53, 32);
+            this.button6.TabIndex = 16;
+            this.button6.Text = "缩小";
+            this.button6.UseVisualStyleBackColor = true;
+            this.button6.Click += new System.EventHandler(this.button6_Click);
             // 
             // doubleBufferDataGridView1
             // 
@@ -160,7 +190,7 @@ namespace Grid
             this.doubleBufferDataGridView1.Location = new System.Drawing.Point(12, 394);
             this.doubleBufferDataGridView1.Name = "doubleBufferDataGridView1";
             this.doubleBufferDataGridView1.RowTemplate.Height = 23;
-            this.doubleBufferDataGridView1.Size = new System.Drawing.Size(1012, 291);
+            this.doubleBufferDataGridView1.Size = new System.Drawing.Size(1012, 351);
             this.doubleBufferDataGridView1.TabIndex = 10;
             this.doubleBufferDataGridView1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.GridView_MouseMove);
             // 
@@ -169,6 +199,9 @@ namespace Grid
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1589, 810);
+            this.Controls.Add(this.button6);
+            this.Controls.Add(this.textBox6);
+            this.Controls.Add(this.button5);
             this.Controls.Add(this.listBox1);
             this.Controls.Add(this.textBox5);
             this.Controls.Add(this.textBox4);
@@ -205,6 +238,9 @@ namespace Grid
         private TextBox textBox4;
         private TextBox textBox5;
         private ListBox listBox1;
+        private Button button5;
+        private TextBox textBox6;
+        private Button button6;
     }
 }
 
