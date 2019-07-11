@@ -49,8 +49,10 @@ namespace Grid
             this.button3 = new System.Windows.Forms.Button();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.button4 = new System.Windows.Forms.Button();
-            this.doubleBufferDataGridView1 = new Grid.DoubleBufferDataGridView();
             this.textBox4 = new System.Windows.Forms.TextBox();
+            this.textBox5 = new System.Windows.Forms.TextBox();
+            this.listBox1 = new System.Windows.Forms.ListBox();
+            this.doubleBufferDataGridView1 = new Grid.DoubleBufferDataGridView();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.doubleBufferDataGridView1)).BeginInit();
             this.SuspendLayout();
@@ -119,13 +121,38 @@ namespace Grid
             // 
             // button4
             // 
-            this.button4.Location = new System.Drawing.Point(1078, 32);
+            this.button4.Location = new System.Drawing.Point(1183, 29);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(46, 25);
             this.button4.TabIndex = 9;
             this.button4.Text = "set";
             this.button4.UseVisualStyleBackColor = true;
             this.button4.Click += new System.EventHandler(this.button4_Click);
+            // 
+            // textBox4
+            // 
+            this.textBox4.Location = new System.Drawing.Point(1250, 33);
+            this.textBox4.Name = "textBox4";
+            this.textBox4.Size = new System.Drawing.Size(111, 21);
+            this.textBox4.TabIndex = 11;
+            // 
+            // textBox5
+            // 
+            this.textBox5.Location = new System.Drawing.Point(900, 34);
+            this.textBox5.Name = "textBox5";
+            this.textBox5.Size = new System.Drawing.Size(259, 21);
+            this.textBox5.TabIndex = 12;
+            // 
+            // listBox1
+            // 
+            this.listBox1.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.listBox1.FormattingEnabled = true;
+            this.listBox1.ItemHeight = 14;
+            this.listBox1.Location = new System.Drawing.Point(1092, 414);
+            this.listBox1.Name = "listBox1";
+            this.listBox1.Size = new System.Drawing.Size(158, 102);
+            this.listBox1.TabIndex = 13;
+            this.listBox1.MouseClick += new System.Windows.Forms.MouseEventHandler(this.listBox1_MouseClick);
             // 
             // doubleBufferDataGridView1
             // 
@@ -137,18 +164,13 @@ namespace Grid
             this.doubleBufferDataGridView1.TabIndex = 10;
             this.doubleBufferDataGridView1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.GridView_MouseMove);
             // 
-            // textBox4
-            // 
-            this.textBox4.Location = new System.Drawing.Point(1188, 30);
-            this.textBox4.Name = "textBox4";
-            this.textBox4.Size = new System.Drawing.Size(111, 21);
-            this.textBox4.TabIndex = 11;
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1589, 810);
+            this.Controls.Add(this.listBox1);
+            this.Controls.Add(this.textBox5);
             this.Controls.Add(this.textBox4);
             this.Controls.Add(this.doubleBufferDataGridView1);
             this.Controls.Add(this.button4);
@@ -161,6 +183,7 @@ namespace Grid
             this.Controls.Add(this.button1);
             this.Name = "Form1";
             this.Text = "Form1";
+            this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.doubleBufferDataGridView1)).EndInit();
             this.ResumeLayout(false);
@@ -180,6 +203,8 @@ namespace Grid
         private System.Windows.Forms.Button button4;
         private Grid.DoubleBufferDataGridView doubleBufferDataGridView1;
         private TextBox textBox4;
+        private TextBox textBox5;
+        private ListBox listBox1;
     }
 }
 
