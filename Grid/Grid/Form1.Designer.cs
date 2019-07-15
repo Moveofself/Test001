@@ -116,7 +116,7 @@ namespace Grid
             // 
             this.pictureBox1.Location = new System.Drawing.Point(12, 94);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(1012, 283);
+            this.pictureBox1.Size = new System.Drawing.Size(1012, 222);
             this.pictureBox1.TabIndex = 7;
             this.pictureBox1.TabStop = false;
             this.pictureBox1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseDown);
@@ -187,18 +187,17 @@ namespace Grid
             // doubleBufferDataGridView1
             // 
             this.doubleBufferDataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.doubleBufferDataGridView1.Location = new System.Drawing.Point(12, 394);
+            this.doubleBufferDataGridView1.Location = new System.Drawing.Point(12, 322);
             this.doubleBufferDataGridView1.Name = "doubleBufferDataGridView1";
             this.doubleBufferDataGridView1.RowTemplate.Height = 23;
-            this.doubleBufferDataGridView1.Size = new System.Drawing.Size(1012, 351);
+            this.doubleBufferDataGridView1.Size = new System.Drawing.Size(1012, 311);
             this.doubleBufferDataGridView1.TabIndex = 10;
             this.doubleBufferDataGridView1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.GridView_MouseMove);
             // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1589, 810);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
+            this.ClientSize = new System.Drawing.Size(1589, 645);
             this.Controls.Add(this.button6);
             this.Controls.Add(this.textBox6);
             this.Controls.Add(this.button5);
@@ -214,9 +213,11 @@ namespace Grid
             this.Controls.Add(this.textBox2);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.button1);
+            this.MaximizeBox = false;
             this.Name = "Form1";
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.Form1_Load);
+            this.SizeChanged += new System.EventHandler(this.Form1_SizeChanged);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.doubleBufferDataGridView1)).EndInit();
             this.ResumeLayout(false);

@@ -33,6 +33,9 @@ namespace Grid
         public int width;
         public int height;
 
+        AutoSizeForm asc = new AutoSizeForm();
+        AutoSizeFormClass asfc = new AutoSizeFormClass();
+
 
         public Form1()
         {
@@ -40,6 +43,7 @@ namespace Grid
             pictureBox1.MouseWheel += new MouseEventHandler(pictureBox1_MouseWheel);
             width = doubleBufferDataGridView1.Width;
             height = doubleBufferDataGridView1.Height;
+            textBox6.Text = "宽：" + doubleBufferDataGridView1.Width + "高：" + doubleBufferDataGridView1.Height;
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)
@@ -107,8 +111,13 @@ namespace Grid
             doubleBufferDataGridView1.RowCount = iY;
             doubleBufferDataGridView1.ColumnCount = iX;
 
-            doubleBufferDataGridView1.Width = doubleBufferDataGridView1.RowHeadersWidth * (doubleBufferDataGridView1.ColumnCount + 1);
-            doubleBufferDataGridView1.Height = doubleBufferDataGridView1.ColumnHeadersHeight * (doubleBufferDataGridView1.ColumnCount + 1);
+            int aaaa = doubleBufferDataGridView1.Columns[0].Width * (doubleBufferDataGridView1.ColumnCount+1);
+            int bbbb = doubleBufferDataGridView1.Rows[0].Height * (doubleBufferDataGridView1.RowCount+1);
+
+            doubleBufferDataGridView1.Width = aaaa >= width ? width : aaaa;
+
+            doubleBufferDataGridView1.Height = bbbb >= height ? height : bbbb;
+
 
             textBox6.Text = "宽：" + doubleBufferDataGridView1.Width + "高：" + doubleBufferDataGridView1.Height;
 
@@ -139,8 +148,6 @@ namespace Grid
         {
             int aX = e.X;
             int aY = e.Y;
-
-
 
             Brush brush = new SolidBrush(Color.Blue);
             graphics.FillRectangle(brush, (int)((e.X / fX)) * fX + (fPen / 2), (int)(e.Y / fY) * fY + (fPen / 2), fX - fPen, fY - fPen);
@@ -470,7 +477,7 @@ namespace Grid
             doubleBufferDataGridView1.ColumnCount = Column;
 
             int aaaa = doubleBufferDataGridView1.Columns[0].Width * (doubleBufferDataGridView1.ColumnCount)+22;
-            int bbbb = doubleBufferDataGridView1.Rows[0].Height * (doubleBufferDataGridView1.RowCount) + 22;
+            int bbbb = doubleBufferDataGridView1.Rows[0].Height * (doubleBufferDataGridView1.RowCount)+12;
 
             doubleBufferDataGridView1.Width = aaaa >= width ? width : aaaa;
 
@@ -482,6 +489,11 @@ namespace Grid
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            asc.controllInitializeSize(this);
+            //asfc.Initialize(this);
+
+            this.WindowState = FormWindowState.Maximized;
+
             foreach (string fname in System.IO.Directory.GetFiles("D:\\", "*.xml*"))   // read all xml
             {
 
@@ -489,6 +501,10 @@ namespace Grid
                 listBox1.Items.Add(A);
             }
             listBox1.SelectedIndex = listBox1.Items.Count - 1;
+
+            width = doubleBufferDataGridView1.Width;
+            height = doubleBufferDataGridView1.Height;
+            textBox6.Text = "宽：" + doubleBufferDataGridView1.Width + "高：" + doubleBufferDataGridView1.Height;
         }
 
         private void button5_Click(object sender, EventArgs e)
@@ -498,18 +514,18 @@ namespace Grid
                 //doubleBufferDataGridView1.Columns[i].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
                 int widthCol = doubleBufferDataGridView1.Columns[i].Width;
                 doubleBufferDataGridView1.Columns[i].AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
-                doubleBufferDataGridView1.Columns[i].Width = widthCol +10;
+                doubleBufferDataGridView1.Columns[i].Width = widthCol + 10;
             }
             for (int j = 0; j < doubleBufferDataGridView1.RowCount; j++)
             {
                 //doubleBufferDataGridView1.Rows[0].a = DataGridViewAutoSizeColumnMode.DisplayedCells;
                 int heightRow = doubleBufferDataGridView1.Rows[j].Height;
                 //doubleBufferDataGridView1.Rows[0].AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
-                doubleBufferDataGridView1.Rows[j].Height = heightRow +10;
+                doubleBufferDataGridView1.Rows[j].Height = heightRow + 10;
             }
 
-            int aaaa = doubleBufferDataGridView1.Columns[0].Width * (doubleBufferDataGridView1.ColumnCount)+22;
-            int bbbb = doubleBufferDataGridView1.Rows[0].Height * (doubleBufferDataGridView1.RowCount)+22;
+            int aaaa = doubleBufferDataGridView1.Columns[0].Width * (doubleBufferDataGridView1.ColumnCount) + 22;
+            int bbbb = doubleBufferDataGridView1.Rows[0].Height * (doubleBufferDataGridView1.RowCount) + 12;
 
             doubleBufferDataGridView1.Width = aaaa >= width ? width : aaaa;
 
@@ -523,7 +539,7 @@ namespace Grid
 
             int height1 = doubleBufferDataGridView1.Rows[0].Height;
 
-            if (width1<=10 || height1<=10 )
+            if (width1 <= 10 || height1 <= 10)
             {
                 return;
             }
@@ -531,7 +547,7 @@ namespace Grid
             for (int i = 0; i < doubleBufferDataGridView1.ColumnCount; i++)
             {
                 //doubleBufferDataGridView1.Columns[i].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
-                int widthCol = doubleBufferDataGridView1.Columns[i].Width; 
+                int widthCol = doubleBufferDataGridView1.Columns[i].Width;
                 doubleBufferDataGridView1.Columns[i].AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
                 doubleBufferDataGridView1.Columns[i].Width = widthCol - 10;
             }
@@ -549,6 +565,65 @@ namespace Grid
             doubleBufferDataGridView1.Width = aaaa >= width ? width : aaaa;
 
             doubleBufferDataGridView1.Height = bbbb >= height ? height : bbbb;
+        }
+
+
+        #region WinForm 禁止最大化、最小化、双击标题栏、双击图标等操作
+        protected override void WndProc(ref Message m)
+        {
+            if (m.Msg == 0x112)
+            {
+                switch ((int)m.WParam)
+                {
+                    //禁止双击标题栏关闭窗体
+                    //case 0xF063:
+                    //case 0xF093:
+                    //    m.WParam = IntPtr.Zero;
+                    //    break;
+
+                    //禁止拖拽标题栏还原窗体
+                    case 0xF012:
+                    case 0xF010:
+                        m.WParam = IntPtr.Zero;
+                        break;
+
+                    //禁止双击标题栏
+                    case 0xf122:
+                        m.WParam = IntPtr.Zero;
+                        break;
+
+                        //禁止关闭按钮
+                        //case 0xF060:
+                        //    m.WParam = IntPtr.Zero;
+                        //    break;
+
+                        //禁止最大化按钮
+                        //case 0xf020:
+                        //    m.WParam = IntPtr.Zero;
+                        //    break;
+
+                        //禁止最小化按钮
+                        //case 0xf030:
+                        //    m.WParam = IntPtr.Zero;
+                        //    break;
+
+                        //禁止还原按钮
+                        //case 0xf120:
+                        //    m.WParam = IntPtr.Zero;
+                        //    break;
+                }
+            }
+            base.WndProc(ref m);
+        }
+        #endregion
+
+        private void Form1_SizeChanged(object sender, EventArgs e)
+        {
+            //asfc.ReSize(this);
+            asc.controlAutoSize(this);
+            width = doubleBufferDataGridView1.Width;
+            height = doubleBufferDataGridView1.Height;
+            textBox6.Text = "宽：" + doubleBufferDataGridView1.Width + "高：" + doubleBufferDataGridView1.Height;
         }
     }
 }
