@@ -324,7 +324,14 @@ namespace Grid
 
         private void button4_Click(object sender, EventArgs e)
         {
-            OracleXML("ASM001");
+
+            OracleToXML();
+            //将XML导入到Oracle
+            //OracleXML("ASM001");
+
+            //从Oracle取出XML
+
+
 
             //int k = 0;
             //int kk = ++k + k++ + ++k + k + k++;
@@ -491,11 +498,6 @@ namespace Grid
                 XmlDocument xe = new XmlDocument();
                 xe.Load(sFilePath);//加载XML文件
 
-
-
-                
-
-
                 OracleConnection conn = new OracleConnection("Data Source = KS_QAS_AY; User Id = fa; Password = fa");
                 
                 conn.Open();
@@ -514,6 +516,53 @@ namespace Grid
             }
         }
 
+
+        private void OracleToXML()
+        {
+            try
+            {
+                string sFilePath = "D:";
+
+                OracleConnection conn = new OracleConnection("Data Source = KS_QAS_AY; User Id = fa; Password = fa");
+
+                conn.Open();
+                string SQL = "SELECT KEYVALUE, XMLCOLUMN FROM  XMLCONTENT WHERE KEYVALUE='15'";
+
+
+                using (OracleCommand cmd = new OracleCommand(SQL, conn))
+                {
+
+                    using (OracleDataAdapter da = new OracleDataAdapter(cmd))
+                    {
+                        DataTable dt = new DataTable();
+                        da.Fill(dt);
+
+
+                        //while (reader.Read())
+                        //{
+                        //    //读取 XML 类型
+                        //    string sName= reader["KEYVALUE"].ToString();
+                        //    string XML = reader["XMLCOLUMN"].ToString();
+
+                        //    StringReader Reader = new StringReader(XML);
+
+                        //    XmlDocument xmlDoc = new XmlDocument();
+
+                        //    xmlDoc.Load(Reader);
+
+                        //    xmlDoc.Save(sFilePath + "\\" + sName + ".xml");
+
+                        //}
+                    }
+                }
+                conn.Close();
+
+            }
+            catch (Exception e)
+            {
+                e.Message.ToString();
+            }
+        }
 
         private void InitialGrid(int iRow, int iColumn)
         {
