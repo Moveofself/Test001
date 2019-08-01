@@ -25,6 +25,8 @@ namespace Grid
         public int iY;
         public float fX;
         public float fY;
+
+        public float fSize;
         public float fPen;
         public int a;
         public int aa;
@@ -75,38 +77,85 @@ namespace Grid
             iX = int.Parse(textBox1.Text);
             iY = int.Parse(textBox2.Text);
 
-            fX = (float)(bmp.Width) / iY;
-            fY = (float)(bmp.Height) / iX;
+            fX = (float)(bmp.Width) / (iY + 1);
+            fY = (float)(bmp.Height) / (iX + 1);
+
+            fSize = fX > fY ? fY : fX;
 
             pictureBox1.Image = bmp;
             fPen = 2;
             //创建绘图对象Graphics
 
-            Pen pen = new Pen(Color.Black, fPen);
+            Pen pen = new Pen(Color.Gray, fPen);
+
+            Font drawFont = new Font("Arial", fSize - 6);
+
+            SolidBrush drawBrush = new SolidBrush(Color.Black);
+
 
             //竖线
-            for (int i = 0; i <= iY; i++)
+            for (int i = 0; i <= iY + 1; i++)
             {
-                graphics.DrawLine(pen, fX * i, 0, fX * i, bmp.Height);
+
+                // Create point for upper-left corner of drawing.
+
+
+
+                if (i == 0)
+                {
+                }
+                else
+                {
+                    if (i <= iY)
+                    {
+
+
+                        graphics.DrawString((iY - i + 1).ToString(), drawFont, drawBrush, fSize * i, 0);
+
+                    }
+                    graphics.DrawLine(pen, fSize * i, fSize - (fPen / 2), fSize * i, fSize * (iX + 1) + (fPen / 2));
+                }
             }
 
             //横线
-            for (int j = 0; j <= iX; j++)
+            for (int j = 0; j <= iX + 1; j++)
             {
-                graphics.DrawLine(pen, 0 + fPen / 2, fY * j, bmp.Width, fY * j);
+
+                // Create point for upper-left corner of drawing.
+
+
+
+                if (j == 0)
+                {
+
+                }
+                else
+                {
+                    if (j <= iX)
+                    {
+                        graphics.DrawString(j.ToString(), drawFont, drawBrush, 0, fSize * j);
+                    }
+                    graphics.DrawLine(pen, fSize + fPen / 2, fSize * j, fSize * (iY + 1), fSize * j);
+                }
             }
+
+
+            //显示行列数
+
+
+
             //graphics.DrawRectangle(pen, 50, 50, x*padding, y*padding);
             pictureBox1.Refresh();
 
-            InitialGrid(iX,iY);
+            //InitialGrid(iX,iY);
 
-            count = listBox1.Items.Count;
+            //count = listBox1.Items.Count;
 
-            count++;
+            //count++;
 
-            listBox1.Items.Add(count);
+            //listBox1.Items.Add(count);
 
-            listBox1.SelectedIndex = listBox1.Items.Count - 1;
+            //listBox1.SelectedIndex = listBox1.Items.Count - 1;
         }
 
         void Grid_MouseMove(object sender, MouseEventArgs e)
@@ -128,20 +177,26 @@ namespace Grid
             int aX = e.X;
             int aY = e.Y;
 
-            Brush brush = new SolidBrush(Color.Blue);
-            graphics.FillRectangle(brush, (int)((e.X / fX)) * fX + (fPen / 2), (int)(e.Y / fY) * fY + (fPen / 2), fX - fPen, fY - fPen);
-            pictureBox1.Refresh();
-            //lastRow = e.Y / BlockHeight - 1 + startRow;//确定行的位置
-            //lastCol = e.X / BlockWidth - 1;
-            //if (lastCol >= 0 && lastCol <= 7 && lastRow >= 0 && lastRow <= 63)
-            //{
-            //    int index = 8 * (lastRow) + lastCol;//确定信号的startbit
-            //    if (list.Contains(index))//此处判断是否按下了信号
-            //    {
-            //        startBit = list.Min();//若是，则获取按下的信号
-            //        MouseIsDown = true;
-            //    }
-            //}
+            if (aX <= fSize * (iY + 1) && aX >= fSize && aY <= fSize * (iX + 1) && aY >= fSize)
+            {
+
+
+
+                Brush brush = new SolidBrush(Color.Green);
+                graphics.FillRectangle(brush, (int)((e.X / fSize)) * fSize + (fPen / 2), (int)(e.Y / fSize) * fSize + (fPen / 2), fSize - fPen, fSize - fPen);
+                pictureBox1.Refresh();
+                //lastRow = e.Y / BlockHeight - 1 + startRow;//确定行的位置
+                //lastCol = e.X / BlockWidth - 1;
+                //if (lastCol >= 0 && lastCol <= 7 && lastRow >= 0 && lastRow <= 63)
+                //{
+                //    int index = 8 * (lastRow) + lastCol;//确定信号的startbit
+                //    if (list.Contains(index))//此处判断是否按下了信号
+                //    {
+                //        startBit = list.Min();//若是，则获取按下的信号
+                //        MouseIsDown = true;
+                //    }
+                //}
+            }
 
         }
 
@@ -188,11 +243,11 @@ namespace Grid
 
             bw.DoWork += (obj, ee) =>
             {
-                OnTimedEvent(obj,ee);
+                OnTimedEvent(obj, ee);
             };
-                //动态绑
+            //动态绑
 
-                sTimer = new Timer();
+            sTimer = new Timer();
             sTimer.Tick += new EventHandler(OnTimedEvent);
             sTimer.Interval = 100;
             sTimer.Start();
@@ -226,17 +281,17 @@ namespace Grid
                 a2 = 0;
                 b2 = 0;
             }
-           
 
-            
-                this.doubleBufferDataGridView1.ClearSelection();
-                doubleBufferDataGridView1.Rows[a2].Cells[b2].Style.BackColor = Color.Red;
-                doubleBufferDataGridView1.Rows[a2].Cells[b2].Selected = true;
 
-                doubleBufferDataGridView1.CurrentCell = doubleBufferDataGridView1.Rows[a2].Cells[a2];
-            
 
-            
+            this.doubleBufferDataGridView1.ClearSelection();
+            doubleBufferDataGridView1.Rows[a2].Cells[b2].Style.BackColor = Color.Red;
+            doubleBufferDataGridView1.Rows[a2].Cells[b2].Selected = true;
+
+            doubleBufferDataGridView1.CurrentCell = doubleBufferDataGridView1.Rows[a2].Cells[a2];
+
+
+
 
             //textBox5.Text = "X轴：" + b2 + "Y轴：" + a2;
             graphics.FillRectangle(new SolidBrush(Color.FromArgb(R, G, B)), b * fX + (fPen / 2), a * fY + (fPen / 2), fX - fPen, fY - fPen);
@@ -499,13 +554,13 @@ namespace Grid
                 xe.Load(sFilePath);//加载XML文件
 
                 OracleConnection conn = new OracleConnection("Data Source = KS_QAS_AY; User Id = fa; Password = fa");
-                
+
                 conn.Open();
                 OracleXmlType cxml = new OracleXmlType(conn, xe);
                 OracleCommand cmd = new OracleCommand();
                 cmd.Connection = conn;
                 cmd.CommandText = "INSERT INTO XMLCONTENT VALUES ('15',:pb)";
-                cmd.Parameters.Add("pb", OracleDbType.XmlType,1).Value = cxml;
+                cmd.Parameters.Add("pb", OracleDbType.XmlType, 1).Value = cxml;
                 cmd.ExecuteNonQuery();
                 conn.Close();
 
@@ -537,11 +592,11 @@ namespace Grid
                         DataTable dt = new DataTable();
                         da.Fill(dt);
 
-
                         //while (reader.Read())
                         //{
                         //    //读取 XML 类型
                         //    string sName= reader["KEYVALUE"].ToString();
+
                         //    string XML = reader["XMLCOLUMN"].ToString();
 
                         //    StringReader Reader = new StringReader(XML);
@@ -553,6 +608,7 @@ namespace Grid
                         //    xmlDoc.Save(sFilePath + "\\" + sName + ".xml");
 
                         //}
+
                     }
                 }
                 conn.Close();
@@ -566,7 +622,7 @@ namespace Grid
 
         private void InitialGrid(int iRow, int iColumn)
         {
-            int iWidth = 0,iHeight = 0;
+            int iWidth = 0, iHeight = 0;
             if (iRow <= 0 && iColumn <= 0)
             {
                 iRow = 5;
@@ -599,8 +655,8 @@ namespace Grid
             }
 
 
-            iWidth = doubleBufferDataGridView1.Columns[0].Width * (iColumn) +22;
-            iHeight = doubleBufferDataGridView1.Rows[0].Height * (iRow)+12;
+            iWidth = doubleBufferDataGridView1.Columns[0].Width * (iColumn) + 22;
+            iHeight = doubleBufferDataGridView1.Rows[0].Height * (iRow) + 12;
 
             doubleBufferDataGridView1.Width = iWidth >= width ? width : iWidth;
 
