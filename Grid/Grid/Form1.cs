@@ -147,7 +147,7 @@ namespace Grid
             //graphics.DrawRectangle(pen, 50, 50, x*padding, y*padding);
             pictureBox1.Refresh();
 
-            //InitialGrid(iX,iY);
+            InitialGrid(iX,iY);
 
             //count = listBox1.Items.Count;
 
@@ -634,36 +634,48 @@ namespace Grid
             doubleBufferDataGridView1.Columns.Clear();
             doubleBufferDataGridView1.Visible = true;
             doubleBufferDataGridView1.ReadOnly = true;
-            doubleBufferDataGridView1.RowHeadersVisible = false;
             doubleBufferDataGridView1.AllowUserToAddRows = false;
-            doubleBufferDataGridView1.ColumnHeadersVisible = false;
             doubleBufferDataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
-            doubleBufferDataGridView1.ClearSelection();
             doubleBufferDataGridView1.AllowUserToResizeRows = false;
             doubleBufferDataGridView1.AllowUserToResizeColumns = false;
             doubleBufferDataGridView1.RowCount = iRow;
             doubleBufferDataGridView1.ColumnCount = iColumn;
 
+
+
+            //自动调整单元格宽度
+            int width1 = doubleBufferDataGridView1.Width / iColumn;
+            int height1 = doubleBufferDataGridView1.Height / iRow;
+
+            int iSize = width1 > height1 ? height1 : width1;
+
+
             for (int i = 0; i < iColumn; i++)
             {
                 doubleBufferDataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.None;
-                doubleBufferDataGridView1.Columns[i].Width = 20;
+                doubleBufferDataGridView1.Columns[i].Width = iSize;
+                doubleBufferDataGridView1.Columns[i].HeaderText = (iColumn-i).ToString(); 
             }
             for (int j = 0; j < iRow; j++)
             {
-                doubleBufferDataGridView1.Rows[j].Height = 20;
+                doubleBufferDataGridView1.Rows[j].Height = iSize;
+                doubleBufferDataGridView1.Rows[j].HeaderCell.Value = (j+1).ToString();
+
             }
+            //doubleBufferDataGridView1.RowHeadersWidth = iSize+12;
+            //doubleBufferDataGridView1.ColumnHeadersHeight = iSize+5;
 
+            doubleBufferDataGridView1.ColumnHeadersDefaultCellStyle.Font = new Font("宋体", 6, FontStyle.Regular);
 
-            iWidth = doubleBufferDataGridView1.Columns[0].Width * (iColumn) + 22;
-            iHeight = doubleBufferDataGridView1.Rows[0].Height * (iRow) + 12;
+                        iWidth = doubleBufferDataGridView1.Columns[0].Width * (iColumn)+28 ;
+            iHeight = doubleBufferDataGridView1.Rows[0].Height * (iRow)+20;
 
-            doubleBufferDataGridView1.Width = iWidth >= width ? width : iWidth;
+            doubleBufferDataGridView1.Width = iWidth ;
 
-            doubleBufferDataGridView1.Height = iHeight >= height ? height : iHeight;
+            doubleBufferDataGridView1.Height = iHeight ;
 
             textBox6.Text = "宽：" + doubleBufferDataGridView1.Width + "高：" + doubleBufferDataGridView1.Height;
-
+            doubleBufferDataGridView1.ClearSelection();
         }
 
         private void Form1_Load(object sender, EventArgs e)
