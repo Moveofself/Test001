@@ -501,9 +501,9 @@ namespace Grid
                 InitialGrid(root.ChildNodes.Count, (root.ChildNodes[0].ChildNodes.Count));
 
                 int i = 0, j = 0;
+
                 foreach (XmlNode item in root.ChildNodes)
                 {
-
                     foreach (XmlNode Nodes in item.ChildNodes)
                     {
                         doubleBufferDataGridView1.ClearSelection();
@@ -521,6 +521,115 @@ namespace Grid
             {
             }
         }
+
+        private void ReadXML1(string sName)
+        {
+            try
+            {
+                sName = "ASM001";
+                string sFilePath = "";
+                string GoodBin = "0000";
+                int start = 0, i = 0;
+
+
+                //判读是否有StripID
+                if (string.IsNullOrEmpty(sName))
+                {
+                    return;
+                }
+                else
+                {
+                    sFilePath = "D:/" + sName + ".xml";
+                }
+
+
+                //判断文件是否存在
+                if (System.IO.File.Exists(sFilePath))
+                {
+
+                }
+                else
+                {
+                    return;
+                }
+
+                XmlDocument xmlDoc = new XmlDocument();
+                xmlDoc.Load(sFilePath);//加载XML文件
+                xmlDoc.LoadXml();
+                XmlElement root = xmlDoc.DocumentElement;
+
+                XmlNode Layouts;
+                string iblock, iX="",iY="";
+                Layouts = xmlDoc["MapData"]["Layouts"];
+                foreach (XmlNode Layout in Layouts)
+                {
+                    switch (Layout.Attributes["LayoutId"].InnerText)
+                    {
+                        case "StripMap":
+                        case "SubMatrix":
+                            iblock = Layout["Dimension"].Attributes["X"].InnerText;
+                            break;
+                        case "DieMatrix":
+                        case "Device":
+                            iX = Layout["Dimension"].Attributes["X"].InnerText;
+                            iY = Layout["Dimension"].Attributes["Y"].InnerText;
+                            break;
+                        default:
+                            break;
+                    }
+                }
+
+
+                //初始化
+                InitialGrid(int.Parse(iY), int.Parse(iX));
+
+
+                XmlNode BinCodeMap = xmlDoc["MapData"]["SubstrateMaps"]["SubstrateMap"];
+                //XmlNodeList Bincodes;
+                int BinCodeMap_Count = BinCodeMap.ChildNodes.Count;
+                //分為兩個格式去抓(還沒確定)
+                if (BinCodeMap_Count == 1)
+                {
+                }
+                else
+                {
+                    foreach (XmlNode tmp in xmlDoc.GetElementsByTagName("Overlay"))
+                    {
+                        if (tmp.Attributes["MapName"].InnerText == "BinCodeMap")
+                        {
+                            BinCodeMap = tmp["BinCodeMap"];
+
+                            i = 0;
+
+                            foreach (XmlNode tmp2 in BinCodeMap)
+                            {
+                                
+                                if (tmp2.Name == "BinCode")
+                                {
+                                    
+                                    start = 0;
+                                    for (int j = 0; j < tmp2.InnerText.Length / 4; j++) // 
+                                    {
+
+                                        doubleBufferDataGridView1.Rows[i].Cells[j].Style.BackColor = ColorTranslator.FromHtml(tmp2.InnerText.Substring(start, 4) == GoodBin ? "Green" : "Red");
+                                        
+                                        start = start + 4;
+                                    }
+                                    i++;
+                                }
+                            }
+                        }
+                    }
+                }
+       
+                doubleBufferDataGridView1.ClearSelection();
+
+            }
+            catch (Exception ex)
+            {
+            }
+        }
+
 
         private void OracleXML(string sName)
         {
@@ -815,6 +924,11 @@ namespace Grid
             width = doubleBufferDataGridView1.Width;
             height = doubleBufferDataGridView1.Height;
             textBox6.Text = "宽：" + doubleBufferDataGridView1.Width + "高：" + doubleBufferDataGridView1.Height;
+        }
+
+        private void button7_Click(object sender, EventArgs e)
+        {
+            ReadXML1("");
         }
     }
 }

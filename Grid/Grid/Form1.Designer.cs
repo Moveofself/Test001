@@ -59,6 +59,7 @@ namespace Grid
             this.textBox6 = new System.Windows.Forms.TextBox();
             this.button6 = new System.Windows.Forms.Button();
             this.doubleBufferDataGridView1 = new Grid.DoubleBufferDataGridView();
+            this.button7 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.doubleBufferDataGridView1)).BeginInit();
             this.SuspendLayout();
@@ -225,15 +226,25 @@ namespace Grid
             this.doubleBufferDataGridView1.RowHeadersWidth = 28;
             this.doubleBufferDataGridView1.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             this.doubleBufferDataGridView1.RowTemplate.Height = 23;
-            this.doubleBufferDataGridView1.ScrollBars = System.Windows.Forms.ScrollBars.None;
             this.doubleBufferDataGridView1.Size = new System.Drawing.Size(1012, 311);
             this.doubleBufferDataGridView1.TabIndex = 10;
             this.doubleBufferDataGridView1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.GridView_MouseMove);
+            // 
+            // button7
+            // 
+            this.button7.Location = new System.Drawing.Point(1143, 110);
+            this.button7.Name = "button7";
+            this.button7.Size = new System.Drawing.Size(107, 40);
+            this.button7.TabIndex = 17;
+            this.button7.Text = "button7";
+            this.button7.UseVisualStyleBackColor = true;
+            this.button7.Click += new System.EventHandler(this.button7_Click);
             // 
             // Form1
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.ClientSize = new System.Drawing.Size(1589, 645);
+            this.Controls.Add(this.button7);
             this.Controls.Add(this.button6);
             this.Controls.Add(this.textBox6);
             this.Controls.Add(this.button5);
@@ -278,6 +289,7 @@ namespace Grid
         private Button button5;
         private TextBox textBox6;
         private Button button6;
+        private Button button7;
     }
 }
 
