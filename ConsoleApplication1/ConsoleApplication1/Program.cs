@@ -21,6 +21,13 @@ namespace ConsoleApplication1
                 try
                 {
                     input = Convert.ToInt64(sInput, 16);
+
+                    byte[] data = Encoding.Unicode.GetBytes(sInput);
+                    StringBuilder result = new StringBuilder(data.Length * 8);
+
+                    dynamic a =Convert.ToString(int.Parse(sInput),2);
+
+                    Console.WriteLine("转换为2进制结果为：" + a);
                 }
                 catch (Exception e)
                 {

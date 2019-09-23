@@ -11,13 +11,19 @@ using System.Windows.Forms;
 using System.Xml;
 using Oracle.DataAccess.Types;
 using Oracle.DataAccess.Client;
+using System.Diagnostics;
+using DBUnity;
+using DBUnity.OraDbHelper;
+using System.Configuration;
+using System.Threading;
+using System.Runtime.InteropServices;
 
 namespace Grid
 {
 
     public partial class Form1 : Form
     {
-
+        long test = 0;
         public bool MouseIsDown;
         public Graphics graphics;
         public Bitmap bmp;
@@ -31,15 +37,23 @@ namespace Grid
         public int a;
         public int aa;
         public int b;
-        Timer sTimer = null;
+        System.Windows.Forms.Timer sTimer = null;
         public int count = 0;
 
         public int width;
         public int height;
 
+
+        [DllImport("kernel32.dll")]
+        public static extern Boolean AllocConsole();
+        [DllImport("kernel32.dll")]
+        public static extern Boolean FreeConsole();
+
         AutoSizeForm asc = new AutoSizeForm();
         AutoSizeFormClass asfc = new AutoSizeFormClass();
 
+        private static string appLogPath = System.AppDomain.CurrentDomain.BaseDirectory.ToString() + "\\" +"Log";
+        string FAQASDBConnectionString = ConfigurationManager.AppSettings["FAQASDBConnectionString"];
 
         public Form1()
         {
@@ -48,6 +62,11 @@ namespace Grid
             width = doubleBufferDataGridView1.Width;
             height = doubleBufferDataGridView1.Height;
             textBox6.Text = "宽：" + doubleBufferDataGridView1.Width + "高：" + doubleBufferDataGridView1.Height;
+
+            ThreadPool.SetMinThreads(5, 5); // 设置线程池最小线程数量为5
+            ThreadPool.SetMaxThreads(50, 50); // 设置线程池最大线程数量为20
+
+
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)
@@ -66,6 +85,8 @@ namespace Grid
         //画图
         private void button2_Click(object sender, EventArgs e)
         {
+            pictureBox1.Image = null;
+            pictureBox1.Refresh();
 
             bmp = new Bitmap(pictureBox1.Width - 6, pictureBox1.Height - 6);
             pictureBox1.BorderStyle = BorderStyle.Fixed3D;
@@ -146,7 +167,7 @@ namespace Grid
 
             //graphics.DrawRectangle(pen, 50, 50, x*padding, y*padding);
             pictureBox1.Refresh();
-
+            
             InitialGrid(iX,iY);
 
             //count = listBox1.Items.Count;
@@ -247,7 +268,7 @@ namespace Grid
             };
             //动态绑
 
-            sTimer = new Timer();
+            sTimer = new System.Windows.Forms.Timer();
             sTimer.Tick += new EventHandler(OnTimedEvent);
             sTimer.Interval = 100;
             sTimer.Start();
@@ -256,7 +277,8 @@ namespace Grid
 
         private void OnTimedEvent(object sender, EventArgs e)
         {
-            int a2, b2;
+            int a2, b2, iRow, iCol, iResult;
+
             //graphics.Clear(Color.White);
             System.Threading.Thread.Sleep(10);
 
@@ -310,6 +332,51 @@ namespace Grid
                 //button2_Click(sender, e);
                 //aphics.Clear(Color.White);
             }
+            test = test + 1;
+
+            ThreadPool.QueueUserWorkItem(o => WriteLogTime("X轴位置:" + a + " Y轴位置:" + b + "X轴位置:" + a + " Y轴位置:" + b + "X轴位置:" + a + " Y轴位置:" + b + "--" + test + "--" + "\r\n"));
+
+
+            //ThreadPool.QueueUserWorkItem(new WaitCallback(WriteLogTime), "X轴位置:" + a + " Y轴位置:" + b + "X轴位置:" + a + " Y轴位置:" + b + "X轴位置:" + a + " Y轴位置:" + b + "--" + test + "--" + "\r\n");
+
+            //ParameterizedThreadStart method2 = o => WriteLogTime("X轴位置:" + a + " Y轴位置:" + b + "X轴位置:" + a + " Y轴位置:" + b + "X轴位置:" + a + " Y轴位置:" + b + "--" + test + "--" + "\r\n");
+            //Thread thread2 = new Thread(method2);
+            //thread2.Start();
+
+            //解决中途重启问题
+
+
+            iRow = a;
+            iCol = b;
+            iResult = a;
+
+            //实时显示行列数
+            txtX.Text = iRow.ToString();
+            txtY.Text = iCol.ToString();
+            txtColor.BackColor = iResult == 0 ? Color.Yellow : Color.Red;
+
+            //回复,考虑可以不回复
+            byte[] aaa = new byte[] { 0 };
+
+
+
+
+
+            //OraDbHelper OraHelp = new OraDbHelper(null);
+            //OraHelp.ConnectionString = FAQASDBConnectionString;
+            //string sSql = " SELECT 'A' FROM DUAL";
+            //DataTable dt = OraHelp.ExecuteDataTable(sSql);
+            //dt.Dispose();
+
+
+
+
+
+            //WriteLogTime("X轴位置:" + a + " Y轴位置:" + b + "X轴位置:" + a + " Y轴位置:" + b + "X轴位置:" + a + " Y轴位置:" + b +"--"+ test + "--"+ "\r\n");
+
+
+
+
 
             #region Test
             //aa = aa + 1;
@@ -347,6 +414,14 @@ namespace Grid
             //}
             #endregion
         }
+
+
+        private void WriteLogTime(Object n)
+        {
+            LogFile.WriteLogTime(n.ToString());
+            Application.DoEvents();
+        }
+
 
         private void pictureBox1_MouseWheel(object sender, System.Windows.Forms.MouseEventArgs e)
         {
@@ -555,7 +630,7 @@ namespace Grid
 
                 XmlDocument xmlDoc = new XmlDocument();
                 xmlDoc.Load(sFilePath);//加载XML文件
-                xmlDoc.LoadXml();
+                xmlDoc.LoadXml("");
                 XmlElement root = xmlDoc.DocumentElement;
 
                 XmlNode Layouts;
@@ -805,6 +880,16 @@ namespace Grid
             width = doubleBufferDataGridView1.Width;
             height = doubleBufferDataGridView1.Height;
             textBox6.Text = "宽：" + doubleBufferDataGridView1.Width + "高：" + doubleBufferDataGridView1.Height;
+            AllocConsole();
+
+            System.Threading.Timer RunTimer = new System.Threading.Timer(new TimerCallback(Print1), null, 0, 1000);
+
+        }
+
+
+        private void Print1(object o)
+        {
+            Console.WriteLine("每秒执行一次的定时任务,当前线程Id:{0}", Thread.CurrentThread.ManagedThreadId);
         }
 
         private void button5_Click(object sender, EventArgs e)
@@ -928,7 +1013,8 @@ namespace Grid
 
         private void button7_Click(object sender, EventArgs e)
         {
-            ReadXML1("");
+            Process CurrentProcess = Process.GetCurrentProcess();
+            CurrentProcess.WorkingSet64.ToString();
         }
     }
 }

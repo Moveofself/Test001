@@ -60,6 +60,9 @@ namespace Grid
             this.button6 = new System.Windows.Forms.Button();
             this.doubleBufferDataGridView1 = new Grid.DoubleBufferDataGridView();
             this.button7 = new System.Windows.Forms.Button();
+            this.txtX = new System.Windows.Forms.TextBox();
+            this.txtY = new System.Windows.Forms.TextBox();
+            this.txtColor = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.doubleBufferDataGridView1)).BeginInit();
             this.SuspendLayout();
@@ -240,10 +243,34 @@ namespace Grid
             this.button7.UseVisualStyleBackColor = true;
             this.button7.Click += new System.EventHandler(this.button7_Click);
             // 
+            // txtX
+            // 
+            this.txtX.Location = new System.Drawing.Point(1162, 184);
+            this.txtX.Name = "txtX";
+            this.txtX.Size = new System.Drawing.Size(76, 21);
+            this.txtX.TabIndex = 18;
+            // 
+            // txtY
+            // 
+            this.txtY.Location = new System.Drawing.Point(1161, 232);
+            this.txtY.Name = "txtY";
+            this.txtY.Size = new System.Drawing.Size(76, 21);
+            this.txtY.TabIndex = 19;
+            // 
+            // txtColor
+            // 
+            this.txtColor.Location = new System.Drawing.Point(1167, 285);
+            this.txtColor.Name = "txtColor";
+            this.txtColor.Size = new System.Drawing.Size(82, 21);
+            this.txtColor.TabIndex = 20;
+            // 
             // Form1
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.ClientSize = new System.Drawing.Size(1589, 645);
+            this.Controls.Add(this.txtColor);
+            this.Controls.Add(this.txtY);
+            this.Controls.Add(this.txtX);
             this.Controls.Add(this.button7);
             this.Controls.Add(this.button6);
             this.Controls.Add(this.textBox6);
@@ -290,6 +317,9 @@ namespace Grid
         private TextBox textBox6;
         private Button button6;
         private Button button7;
+        private TextBox txtX;
+        private TextBox txtY;
+        private TextBox txtColor;
     }
 }
 
