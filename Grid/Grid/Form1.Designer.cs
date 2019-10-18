@@ -58,11 +58,12 @@ namespace Grid
             this.button5 = new System.Windows.Forms.Button();
             this.textBox6 = new System.Windows.Forms.TextBox();
             this.button6 = new System.Windows.Forms.Button();
-            this.doubleBufferDataGridView1 = new Grid.DoubleBufferDataGridView();
             this.button7 = new System.Windows.Forms.Button();
             this.txtX = new System.Windows.Forms.TextBox();
             this.txtY = new System.Windows.Forms.TextBox();
             this.txtColor = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.doubleBufferDataGridView1 = new Grid.DoubleBufferDataGridView();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.doubleBufferDataGridView1)).BeginInit();
             this.SuspendLayout();
@@ -191,48 +192,6 @@ namespace Grid
             this.button6.UseVisualStyleBackColor = true;
             this.button6.Click += new System.EventHandler(this.button6_Click);
             // 
-            // doubleBufferDataGridView1
-            // 
-            this.doubleBufferDataGridView1.AllowUserToResizeColumns = false;
-            this.doubleBufferDataGridView1.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.doubleBufferDataGridView1.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.Disable;
-            this.doubleBufferDataGridView1.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("宋体", 7.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.doubleBufferDataGridView1.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
-            this.doubleBufferDataGridView1.ColumnHeadersHeight = 20;
-            this.doubleBufferDataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("宋体", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.doubleBufferDataGridView1.DefaultCellStyle = dataGridViewCellStyle2;
-            this.doubleBufferDataGridView1.Location = new System.Drawing.Point(12, 322);
-            this.doubleBufferDataGridView1.MultiSelect = false;
-            this.doubleBufferDataGridView1.Name = "doubleBufferDataGridView1";
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("宋体", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.doubleBufferDataGridView1.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
-            this.doubleBufferDataGridView1.RowHeadersWidth = 28;
-            this.doubleBufferDataGridView1.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
-            this.doubleBufferDataGridView1.RowTemplate.Height = 23;
-            this.doubleBufferDataGridView1.Size = new System.Drawing.Size(1012, 311);
-            this.doubleBufferDataGridView1.TabIndex = 10;
-            this.doubleBufferDataGridView1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.GridView_MouseMove);
-            // 
             // button7
             // 
             this.button7.Location = new System.Drawing.Point(1143, 110);
@@ -264,10 +223,69 @@ namespace Grid
             this.txtColor.Size = new System.Drawing.Size(82, 21);
             this.txtColor.TabIndex = 20;
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(1307, 105);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(41, 12);
+            this.label1.TabIndex = 21;
+            this.label1.Text = "label1";
+            // 
+            // doubleBufferDataGridView1
+            // 
+            this.doubleBufferDataGridView1.AllowUserToAddRows = false;
+            this.doubleBufferDataGridView1.AllowUserToDeleteRows = false;
+            this.doubleBufferDataGridView1.AllowUserToResizeColumns = false;
+            this.doubleBufferDataGridView1.AllowUserToResizeRows = false;
+            this.doubleBufferDataGridView1.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.doubleBufferDataGridView1.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.Raised;
+            this.doubleBufferDataGridView1.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.Disable;
+            this.doubleBufferDataGridView1.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.doubleBufferDataGridView1.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            this.doubleBufferDataGridView1.ColumnHeadersHeight = 30;
+            this.doubleBufferDataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.doubleBufferDataGridView1.DefaultCellStyle = dataGridViewCellStyle2;
+            this.doubleBufferDataGridView1.Location = new System.Drawing.Point(12, 322);
+            this.doubleBufferDataGridView1.Name = "doubleBufferDataGridView1";
+            this.doubleBufferDataGridView1.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.doubleBufferDataGridView1.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
+            this.doubleBufferDataGridView1.RowHeadersWidth = 30;
+            this.doubleBufferDataGridView1.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
+            this.doubleBufferDataGridView1.RowTemplate.Height = 23;
+            this.doubleBufferDataGridView1.RowTemplate.ReadOnly = true;
+            this.doubleBufferDataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
+            this.doubleBufferDataGridView1.Size = new System.Drawing.Size(1012, 311);
+            this.doubleBufferDataGridView1.TabIndex = 10;
+            this.doubleBufferDataGridView1.MouseHover += new System.EventHandler(this.doubleBufferDataGridView1_MouseHover);
+            this.doubleBufferDataGridView1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.GridView_MouseMove);
+            // 
             // Form1
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.ClientSize = new System.Drawing.Size(1589, 645);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.txtColor);
             this.Controls.Add(this.txtY);
             this.Controls.Add(this.txtX);
@@ -320,6 +338,7 @@ namespace Grid
         private TextBox txtX;
         private TextBox txtY;
         private TextBox txtColor;
+        private Label label1;
     }
 }
 

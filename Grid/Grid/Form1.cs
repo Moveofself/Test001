@@ -85,6 +85,7 @@ namespace Grid
         //画图
         private void button2_Click(object sender, EventArgs e)
         {
+
             pictureBox1.Image = null;
             pictureBox1.Refresh();
 
@@ -833,30 +834,40 @@ namespace Grid
 
             int iSize = width1 > height1 ? height1 : width1;
 
+            if (iSize<28)
+            {
+                iSize = 28;
+            }
 
             for (int i = 0; i < iColumn; i++)
             {
                 doubleBufferDataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.None;
-                doubleBufferDataGridView1.Columns[i].Width = iSize;
-                doubleBufferDataGridView1.Columns[i].HeaderText = (iColumn-i).ToString(); 
+                doubleBufferDataGridView1.Columns[i].Width = iSize ;
+                if ((iColumn - i)%5==0)
+                {
+                    doubleBufferDataGridView1.Columns[i].HeaderCell.Value = (iColumn - i).ToString();
+                }
+
+                doubleBufferDataGridView1.Columns[i].SortMode = DataGridViewColumnSortMode.NotSortable;
             }
             for (int j = 0; j < iRow; j++)
             {
+            
                 doubleBufferDataGridView1.Rows[j].Height = iSize;
-                doubleBufferDataGridView1.Rows[j].HeaderCell.Value = (j+1).ToString();
-
+                doubleBufferDataGridView1.Rows[j].HeaderCell.Value = (j + 1).ToString();
             }
+            doubleBufferDataGridView1.RowHeadersWidth = 50;
             //doubleBufferDataGridView1.RowHeadersWidth = iSize+12;
             //doubleBufferDataGridView1.ColumnHeadersHeight = iSize+5;
 
-            doubleBufferDataGridView1.ColumnHeadersDefaultCellStyle.Font = new Font("宋体", 6, FontStyle.Regular);
+            //doubleBufferDataGridView1.ColumnHeadersDefaultCellStyle.Font = new Font("宋体", 6, FontStyle.Regular);
 
-                        iWidth = doubleBufferDataGridView1.Columns[0].Width * (iColumn)+28 ;
+            iWidth = doubleBufferDataGridView1.Columns[0].Width * (iColumn)+28 ;
             iHeight = doubleBufferDataGridView1.Rows[0].Height * (iRow)+20;
 
-            doubleBufferDataGridView1.Width = iWidth ;
+            //doubleBufferDataGridView1.Width = iWidth ;
 
-            doubleBufferDataGridView1.Height = iHeight ;
+            //doubleBufferDataGridView1.Height = iHeight ;
 
             textBox6.Text = "宽：" + doubleBufferDataGridView1.Width + "高：" + doubleBufferDataGridView1.Height;
             doubleBufferDataGridView1.ClearSelection();
@@ -953,6 +964,7 @@ namespace Grid
         }
 
 
+
         #region WinForm 禁止最大化、最小化、双击标题栏、双击图标等操作
         protected override void WndProc(ref Message m)
         {
@@ -1002,6 +1014,8 @@ namespace Grid
         }
         #endregion
 
+
+
         private void Form1_SizeChanged(object sender, EventArgs e)
         {
             //asfc.ReSize(this);
@@ -1011,10 +1025,45 @@ namespace Grid
             textBox6.Text = "宽：" + doubleBufferDataGridView1.Width + "高：" + doubleBufferDataGridView1.Height;
         }
 
+
+
         private void button7_Click(object sender, EventArgs e)
         {
             Process CurrentProcess = Process.GetCurrentProcess();
             CurrentProcess.WorkingSet64.ToString();
+        }
+
+
+
+        public void QUERY()
+        {
+            OracleConnection conn = new OracleConnection("Data Source = KS_QAS_AY; User Id = fa; Password = fa");
+
+            conn.Open();
+            string SQL = "SELECT 'A' FROM DUAL";
+
+
+            using (OracleCommand cmd = new OracleCommand(SQL, conn))
+            {
+
+                using (OracleDataAdapter da = new OracleDataAdapter(cmd))
+                {
+                    DataTable dt = new DataTable();
+                    da.Fill(dt);
+                    label1.Text = dt.Rows[0][0].ToString();
+                }
+            }
+            conn.Close();
+        }
+
+        private void doubleBufferDataGridView1_MouseHover(object sender, EventArgs e)
+        {
+            //int aX = this.doubleBufferDataGridView1.HitTest(e, e.Y).RowIndex; //行
+            //int aY = this.doubleBufferDataGridView1.HitTest(e.X, e.Y).ColumnIndex; //列
+            //if (aY >= 0 && aX >= 0)
+            //{
+            //    textBox5.Text = "X轴：" + aX + "Y轴：" + aY + "宽度：" + this.doubleBufferDataGridView1.Columns[aY].Width + "高度：" + this.doubleBufferDataGridView1.Rows[aX].Height;
+            //}
         }
     }
 }
