@@ -66,7 +66,12 @@ namespace Grid
             ThreadPool.SetMinThreads(5, 5); // 设置线程池最小线程数量为5
             ThreadPool.SetMaxThreads(50, 50); // 设置线程池最大线程数量为20
 
+            if (!serialPort1.IsOpen)
+            {
+                serialPort1.Open();
+            }
 
+            
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)
@@ -222,14 +227,17 @@ namespace Grid
 
         }
 
+
+
         private void pictureBox1_MouseMove(object sender, MouseEventArgs e)
         {
             int aX = (int)(e.X / fX);
             int aY = (int)(e.Y / fY);
             textBox3.Text = "X轴：" + aX + "Y轴：" + aY;
-
-
         }
+
+
+
         private void GridView_MouseMove(object sender, MouseEventArgs e)
         {
             int aX = this.doubleBufferDataGridView1.HitTest(e.X, e.Y).RowIndex; //行
@@ -238,7 +246,6 @@ namespace Grid
             {
                 textBox5.Text = "X轴：" + aX + "Y轴：" + aY + "宽度：" + this.doubleBufferDataGridView1.Columns[aY].Width + "高度：" + this.doubleBufferDataGridView1.Rows[aX].Height;
             }
-
         }
 
         private void button3_Click(object sender, EventArgs e)
@@ -1037,7 +1044,7 @@ namespace Grid
 
         public void QUERY()
         {
-            OracleConnection conn = new OracleConnection("Data Source = KS_QAS_AY; User Id = fa; Password = fa");
+            OracleConnection conn = new OracleConnection("Data Source=KS_QAS_AY;User ID=FWASSY;Password=FWASSY");
 
             conn.Open();
             string SQL = "SELECT 'A' FROM DUAL";
@@ -1065,5 +1072,82 @@ namespace Grid
             //    textBox5.Text = "X轴：" + aX + "Y轴：" + aY + "宽度：" + this.doubleBufferDataGridView1.Columns[aY].Width + "高度：" + this.doubleBufferDataGridView1.Rows[aX].Height;
             //}
         }
+
+        private void button8_Click(object sender, EventArgs e)
+        {
+            OraDbHelper a = new OraDbHelper(null);
+            a.ConnectionString = "Data Source=KS_QAS_AY;User Id=FWASSY;Password=FWASSY;Connection Lifetime=120;";
+            string sSql = "";
+            sSql = " SELECT 'a' from dual ";
+
+            DataTable dtStrip = a.ExecuteDataTable(sSql);
+            a = new OraDbHelper(null);
+
+            return;
+        }
+
+        private void serialPort1_DataReceived(object sender, System.IO.Ports.SerialDataReceivedEventArgs e)
+        {
+            try
+            {
+
+                int DataLength = serialPort1.BytesToRead;
+                byte[] ds = new byte[DataLength];
+                int bytecount = serialPort1.Read(ds, 0, DataLength);
+
+                string SerialIn = System.Text.Encoding.ASCII.GetString(ds);
+                //    String result = bytesToHexString(ds);
+
+
+                this.BeginInvoke(new System.Threading.ThreadStart(delegate ()
+                {
+                    textBox7.Text = SerialIn;         //对控件进行赋值
+                }));
+
+
+
+                ////因为要访问UI资源，所以需要使用invoke方式同步ui
+                //byte[] data = Convert.FromBase64String(serialPort1.ReadLine());
+                //if (!string.IsNullOrEmpty(Encoding.Unicode.GetString(data)))
+                //{
+                //    textBox7.Text += Encoding.Unicode.GetString(data);
+                //}
+            }
+            catch (Exception ex)
+            {
+                ex.Message.ToString();
+            } 
+            
+            
+        }
+
+
+
+
+        String bytesToHexString(byte[] bArr)
+        {
+            string result = string.Empty;
+            for (int i = 0; i < 13; i++)//逐字节变为16进制字符，以%隔开
+            {
+                result += Convert.ToString(bArr[i], 16).ToUpper().PadLeft(2, '0') + " ";
+            }
+            return result;
+        }
+
+
+        //private DateTime dt = DateTime.Now;
+        //private void textBox1_KeyPress(object sender, KeyPressEventArgs e)
+        //{
+        //    DateTime dtTemp = DateTime.Now;        //保存按键按下时刻的时间点           
+
+        //    TimeSpan ts = dtTemp.Subtract(dt);     //获取时间间隔           
+
+        //    if (ts.Milliseconds > 50)              //判断时间间隔，如果时间间隔大于50毫秒，则将TextBox清空 
+        //    {
+        //        textBox1.Text = "";
+        //    }
+
+        //    dt = dtTemp;
+        //}
     }
 }
