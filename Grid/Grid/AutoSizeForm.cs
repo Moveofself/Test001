@@ -8,7 +8,7 @@ namespace Grid
 {
     class AutoSizeForm
     {
-        //TEST1111
+        //TEST11112222
 
         //(1).声明结构,只记录窗体和其控件的初始位置和大小。  
         public struct controlRect
