@@ -19,6 +19,7 @@ namespace Grid
             public int Height;
         }
 
+        private string s;
 
         //(2).声明 1个对象  
         //注意这里不能使用控件列表记录 List<Control> nCtrl;，因为控件的关联性，记录的始终是当前的大小。  
