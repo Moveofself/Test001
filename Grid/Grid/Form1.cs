@@ -17,6 +17,8 @@ using DBUnity.OraDbHelper;
 using System.Configuration;
 using System.Threading;
 using System.Runtime.InteropServices;
+using System.Threading.Tasks;
+
 
 namespace Grid
 {
@@ -43,6 +45,10 @@ namespace Grid
         public int width;
         public int height;
 
+        static int LogCount = 20000;
+        static int WritedCount = 0;
+        static int FailedCount = 0;
+
 
         [DllImport("kernel32.dll")]
         public static extern Boolean AllocConsole();
@@ -52,7 +58,7 @@ namespace Grid
         AutoSizeForm asc = new AutoSizeForm();
         AutoSizeFormClass asfc = new AutoSizeFormClass();
 
-        private static string appLogPath = System.AppDomain.CurrentDomain.BaseDirectory.ToString() + "\\" +"Log";
+        private static string appLogPath = System.AppDomain.CurrentDomain.BaseDirectory.ToString() + "\\" + "Log";
         string FAQASDBConnectionString = ConfigurationManager.AppSettings["FAQASDBConnectionString"];
 
         public Form1()
@@ -71,7 +77,19 @@ namespace Grid
                 serialPort1.Open();
             }
 
-            
+            DateTime currentDt = DateTime.Now;
+            Parallel.For(0, LogCount, e =>
+            {
+                //WriteLogTime("1");
+                WriteLog();
+            });
+
+            TimeSpan Span = DateTime.Now - currentDt;
+
+            Console.WriteLine(string.Format("\r\nLog Count:{0}.\t\tWrited Count:{1}.\tFailed Count:{2}. {3}", LogCount.ToString(), WritedCount.ToString(), FailedCount.ToString(), Span.TotalMilliseconds.ToString()));
+            Console.Read();
+
+
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)
@@ -85,6 +103,33 @@ namespace Grid
 
         }
 
+        public static object lockObject = new object();
+
+        private void WriteLog()
+        {
+            lock (lockObject)
+            {
+                Console.WriteLine("Write Log start... ThreadID:{0}", Thread.CurrentThread.ManagedThreadId);
+
+                string strLogPath = string.Format("D:\\Log.txt", DateTime.Now.ToString("yyyy-MM-dd"));
+
+                if (!File.Exists(strLogPath))
+                {
+                    File.Create(strLogPath).Close();
+                }
+
+                FileStream fs = new FileStream(strLogPath, FileMode.Append, FileAccess.Write);
+                StreamWriter sw = new StreamWriter(fs, Encoding.UTF8);
+
+                sw.WriteLine(string.Format("tid:{0}  {1}", Thread.CurrentThread.ManagedThreadId, DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff")));
+
+                sw.Close();
+                fs.Close();
+
+                Console.WriteLine("Write Log End   ThreadID:{0}", Thread.CurrentThread.ManagedThreadId);
+                WritedCount++;
+            }
+        }
 
 
         //画图
@@ -173,8 +218,8 @@ namespace Grid
 
             //graphics.DrawRectangle(pen, 50, 50, x*padding, y*padding);
             pictureBox1.Refresh();
-            
-            InitialGrid(iX,iY);
+
+            InitialGrid(iX, iY);
 
             //count = listBox1.Items.Count;
 
@@ -426,8 +471,18 @@ namespace Grid
 
         private void WriteLogTime(Object n)
         {
-            LogFile.WriteLogTime(n.ToString());
-            Application.DoEvents();
+            try
+            {
+
+
+                LogFile.WriteLogTime(n.ToString());
+                Application.DoEvents();
+                WritedCount++;
+            }
+            catch (Exception ex)
+            {
+                FailedCount++;
+            }
         }
 
 
@@ -642,7 +697,7 @@ namespace Grid
                 XmlElement root = xmlDoc.DocumentElement;
 
                 XmlNode Layouts;
-                string iblock, iX="",iY="";
+                string iblock, iX = "", iY = "";
                 Layouts = xmlDoc["MapData"]["Layouts"];
                 foreach (XmlNode Layout in Layouts)
                 {
@@ -686,16 +741,16 @@ namespace Grid
 
                             foreach (XmlNode tmp2 in BinCodeMap)
                             {
-                                
+
                                 if (tmp2.Name == "BinCode")
                                 {
-                                    
+
                                     start = 0;
                                     for (int j = 0; j < tmp2.InnerText.Length / 4; j++) // 
                                     {
 
                                         doubleBufferDataGridView1.Rows[i].Cells[j].Style.BackColor = ColorTranslator.FromHtml(tmp2.InnerText.Substring(start, 4) == GoodBin ? "Green" : "Red");
-                                        
+
                                         start = start + 4;
                                     }
                                     i++;
@@ -704,7 +759,7 @@ namespace Grid
                         }
                     }
                 }
-       
+
                 doubleBufferDataGridView1.ClearSelection();
 
             }
@@ -841,7 +896,7 @@ namespace Grid
 
             int iSize = width1 > height1 ? height1 : width1;
 
-            if (iSize<28)
+            if (iSize < 28)
             {
                 iSize = 28;
             }
@@ -849,8 +904,8 @@ namespace Grid
             for (int i = 0; i < iColumn; i++)
             {
                 doubleBufferDataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.None;
-                doubleBufferDataGridView1.Columns[i].Width = iSize ;
-                if ((iColumn - i)%5==0)
+                doubleBufferDataGridView1.Columns[i].Width = iSize;
+                if ((iColumn - i) % 5 == 0)
                 {
                     doubleBufferDataGridView1.Columns[i].HeaderCell.Value = (iColumn - i).ToString();
                 }
@@ -859,7 +914,7 @@ namespace Grid
             }
             for (int j = 0; j < iRow; j++)
             {
-            
+
                 doubleBufferDataGridView1.Rows[j].Height = iSize;
                 doubleBufferDataGridView1.Rows[j].HeaderCell.Value = (j + 1).ToString();
             }
@@ -869,8 +924,8 @@ namespace Grid
 
             //doubleBufferDataGridView1.ColumnHeadersDefaultCellStyle.Font = new Font("宋体", 6, FontStyle.Regular);
 
-            iWidth = doubleBufferDataGridView1.Columns[0].Width * (iColumn)+28 ;
-            iHeight = doubleBufferDataGridView1.Rows[0].Height * (iRow)+20;
+            iWidth = doubleBufferDataGridView1.Columns[0].Width * (iColumn) + 28;
+            iHeight = doubleBufferDataGridView1.Rows[0].Height * (iRow) + 20;
 
             //doubleBufferDataGridView1.Width = iWidth ;
 
@@ -1116,9 +1171,9 @@ namespace Grid
             catch (Exception ex)
             {
                 ex.Message.ToString();
-            } 
-            
-            
+            }
+
+
         }
 
 

@@ -51,7 +51,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="DBUnity">
-      <HintPath>..\DBUnity\DBUnity\bin\x86\Debug\DBUnity.dll</HintPath>
+      <HintPath>.\DBUnity.dll</HintPath>
     </Reference>
     <Reference Include="Oracle.DataAccess, Version=2.112.1.0, Culture=neutral, PublicKeyToken=89b483f429c47342, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>

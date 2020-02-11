@@ -48,6 +48,7 @@ namespace Grid
             }
             catch (Exception ex)
             {
+                throw ex;
             }
             finally
             {
