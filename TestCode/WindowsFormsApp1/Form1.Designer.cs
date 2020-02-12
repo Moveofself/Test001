@@ -30,13 +30,15 @@
         {
             this.btnClick = new System.Windows.Forms.Button();
             this.txtShow = new System.Windows.Forms.TextBox();
+            this.btnStart = new System.Windows.Forms.Button();
+            this.txtLog = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // btnClick
             // 
             this.btnClick.BackColor = System.Drawing.SystemColors.Control;
             this.btnClick.Cursor = System.Windows.Forms.Cursors.Default;
-            this.btnClick.Location = new System.Drawing.Point(88, 61);
+            this.btnClick.Location = new System.Drawing.Point(47, 21);
             this.btnClick.Name = "btnClick";
             this.btnClick.Size = new System.Drawing.Size(92, 37);
             this.btnClick.TabIndex = 0;
@@ -47,16 +49,36 @@
             // txtShow
             // 
             this.txtShow.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.txtShow.Location = new System.Drawing.Point(237, 66);
+            this.txtShow.Location = new System.Drawing.Point(180, 26);
             this.txtShow.Name = "txtShow";
             this.txtShow.Size = new System.Drawing.Size(205, 26);
             this.txtShow.TabIndex = 1;
+            // 
+            // btnStart
+            // 
+            this.btnStart.Location = new System.Drawing.Point(47, 91);
+            this.btnStart.Name = "btnStart";
+            this.btnStart.Size = new System.Drawing.Size(78, 40);
+            this.btnStart.TabIndex = 2;
+            this.btnStart.Text = "Start";
+            this.btnStart.UseVisualStyleBackColor = true;
+            this.btnStart.Click += new System.EventHandler(this.btnStart_Click);
+            // 
+            // txtLog
+            // 
+            this.txtLog.Location = new System.Drawing.Point(170, 91);
+            this.txtLog.Multiline = true;
+            this.txtLog.Name = "txtLog";
+            this.txtLog.Size = new System.Drawing.Size(644, 331);
+            this.txtLog.TabIndex = 3;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(1046, 538);
+            this.Controls.Add(this.txtLog);
+            this.Controls.Add(this.btnStart);
             this.Controls.Add(this.txtShow);
             this.Controls.Add(this.btnClick);
             this.Name = "Form1";
@@ -70,6 +92,8 @@
 
         private System.Windows.Forms.Button btnClick;
         private System.Windows.Forms.TextBox txtShow;
+        private System.Windows.Forms.Button btnStart;
+        private System.Windows.Forms.TextBox txtLog;
     }
 }
 

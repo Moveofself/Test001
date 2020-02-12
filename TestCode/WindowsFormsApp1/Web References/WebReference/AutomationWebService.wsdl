@@ -1,0 +1,653 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://ASEKS.AutomationWebService.org/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://ASEKS.AutomationWebService.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://ASEKS.AutomationWebService.org/">
+      <s:element name="LinkTest">
+        <s:complexType />
+      </s:element>
+      <s:element name="LinkTestResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="LinkTestResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetFAMachineType">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="vMachineId" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetFAMachineTypeResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetFAMachineTypeResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="PerForm_ASSY_QueryTableToXML">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="vSQL" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="PerForm_ASSY_QueryTableToXMLResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="PerForm_ASSY_QueryTableToXMLResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="Perform_ASSY_QueryTableToString">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="vSQL" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="Perform_ASSY_QueryTableToStringResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="Perform_ASSY_QueryTableToStringResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="Perform_ASSY_QueryMESStepName">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="vLotId" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="vStepname" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="Perform_ASSY_QueryMESStepNameResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="Perform_ASSY_QueryMESStepNameResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="Perform_ASSY_QueryMESLotState">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="vLotId" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="Perform_ASSY_QueryMESLotStateResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="Perform_ASSY_QueryMESLotStateResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="PerForm_FA_QueryTableToXML">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="vSQL" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="PerForm_FA_QueryTableToXMLResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="PerForm_FA_QueryTableToXMLResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="Perform_FA_QueryTableToString">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="vSQL" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="Perform_FA_QueryTableToStringResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="Perform_FA_QueryTableToStringResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="Perform_FA_ExecuteNonQuery">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="vSQL" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="vcommandtype" type="tns:CommandType" />
+            <s:element minOccurs="0" maxOccurs="1" name="parameters" type="tns:ArrayOfOracleParameter" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:simpleType name="CommandType">
+        <s:restriction base="s:string">
+          <s:enumeration value="Text" />
+          <s:enumeration value="StoredProcedure" />
+          <s:enumeration value="TableDirect" />
+        </s:restriction>
+      </s:simpleType>
+      <s:complexType name="ArrayOfOracleParameter">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="OracleParameter" nillable="true" type="tns:OracleParameter" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="OracleParameter">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:DbParameter">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" default="0" name="Offset" type="s:int" />
+              <s:element minOccurs="1" maxOccurs="1" name="OracleDbTypeEx" type="tns:OracleDbType" />
+              <s:element minOccurs="1" maxOccurs="1" name="OracleDbType" type="tns:OracleDbType" />
+              <s:element minOccurs="0" maxOccurs="1" name="ArrayBindSize" type="tns:ArrayOfInt" />
+              <s:element minOccurs="0" maxOccurs="1" default="Success" name="Status" type="tns:OracleParameterStatus" />
+              <s:element minOccurs="0" maxOccurs="1" name="ArrayBindStatus" type="tns:ArrayOfOracleParameterStatus" />
+              <s:element minOccurs="0" maxOccurs="1" default="None" name="CollectionType" type="tns:OracleCollectionType" />
+              <s:element minOccurs="0" maxOccurs="1" default="" name="UdtTypeName" type="s:string" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="DbParameter" abstract="true">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:MarshalByRefObject">
+            <s:sequence>
+              <s:element minOccurs="1" maxOccurs="1" name="DbType" type="tns:DbType" />
+              <s:element minOccurs="0" maxOccurs="1" default="Input" name="Direction" type="tns:ParameterDirection" />
+              <s:element minOccurs="1" maxOccurs="1" name="IsNullable" type="s:boolean" />
+              <s:element minOccurs="0" maxOccurs="1" default="" name="ParameterName" type="s:string" />
+              <s:element minOccurs="1" maxOccurs="1" name="Precision" type="s:unsignedByte" />
+              <s:element minOccurs="1" maxOccurs="1" name="Scale" type="s:unsignedByte" />
+              <s:element minOccurs="1" maxOccurs="1" name="Size" type="s:int" />
+              <s:element minOccurs="0" maxOccurs="1" default="" name="SourceColumn" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" default="false" name="SourceColumnNullMapping" type="s:boolean" />
+              <s:element minOccurs="0" maxOccurs="1" default="Current" name="SourceVersion" type="tns:DataRowVersion" />
+              <s:element minOccurs="0" maxOccurs="1" name="Value" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="MarshalByRefObject" abstract="true" />
+      <s:simpleType name="DbType">
+        <s:restriction base="s:string">
+          <s:enumeration value="AnsiString" />
+          <s:enumeration value="Binary" />
+          <s:enumeration value="Byte" />
+          <s:enumeration value="Boolean" />
+          <s:enumeration value="Currency" />
+          <s:enumeration value="Date" />
+          <s:enumeration value="DateTime" />
+          <s:enumeration value="Decimal" />
+          <s:enumeration value="Double" />
+          <s:enumeration value="Guid" />
+          <s:enumeration value="Int16" />
+          <s:enumeration value="Int32" />
+          <s:enumeration value="Int64" />
+          <s:enumeration value="Object" />
+          <s:enumeration value="SByte" />
+          <s:enumeration value="Single" />
+          <s:enumeration value="String" />
+          <s:enumeration value="Time" />
+          <s:enumeration value="UInt16" />
+          <s:enumeration value="UInt32" />
+          <s:enumeration value="UInt64" />
+          <s:enumeration value="VarNumeric" />
+          <s:enumeration value="AnsiStringFixedLength" />
+          <s:enumeration value="StringFixedLength" />
+          <s:enumeration value="Xml" />
+          <s:enumeration value="DateTime2" />
+          <s:enumeration value="DateTimeOffset" />
+        </s:restriction>
+      </s:simpleType>
+      <s:simpleType name="ParameterDirection">
+        <s:restriction base="s:string">
+          <s:enumeration value="Input" />
+          <s:enumeration value="Output" />
+          <s:enumeration value="InputOutput" />
+          <s:enumeration value="ReturnValue" />
+        </s:restriction>
+      </s:simpleType>
+      <s:simpleType name="DataRowVersion">
+        <s:restriction base="s:string">
+          <s:enumeration value="Original" />
+          <s:enumeration value="Current" />
+          <s:enumeration value="Proposed" />
+          <s:enumeration value="Default" />
+        </s:restriction>
+      </s:simpleType>
+      <s:simpleType name="OracleDbType">
+        <s:restriction base="s:string">
+          <s:enumeration value="BFile" />
+          <s:enumeration value="Blob" />
+          <s:enumeration value="Byte" />
+          <s:enumeration value="Char" />
+          <s:enumeration value="Clob" />
+          <s:enumeration value="Date" />
+          <s:enumeration value="Decimal" />
+          <s:enumeration value="Double" />
+          <s:enumeration value="Long" />
+          <s:enumeration value="LongRaw" />
+          <s:enumeration value="Int16" />
+          <s:enumeration value="Int32" />
+          <s:enumeration value="Int64" />
+          <s:enumeration value="IntervalDS" />
+          <s:enumeration value="IntervalYM" />
+          <s:enumeration value="NClob" />
+          <s:enumeration value="NChar" />
+          <s:enumeration value="NVarchar2" />
+          <s:enumeration value="Raw" />
+          <s:enumeration value="RefCursor" />
+          <s:enumeration value="Single" />
+          <s:enumeration value="TimeStamp" />
+          <s:enumeration value="TimeStampLTZ" />
+          <s:enumeration value="TimeStampTZ" />
+          <s:enumeration value="Varchar2" />
+          <s:enumeration value="XmlType" />
+          <s:enumeration value="Array" />
+          <s:enumeration value="Object" />
+          <s:enumeration value="Ref" />
+          <s:enumeration value="BinaryDouble" />
+          <s:enumeration value="BinaryFloat" />
+        </s:restriction>
+      </s:simpleType>
+      <s:complexType name="ArrayOfInt">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="int" type="s:int" />
+        </s:sequence>
+      </s:complexType>
+      <s:simpleType name="OracleParameterStatus">
+        <s:restriction base="s:string">
+          <s:enumeration value="Success" />
+          <s:enumeration value="NullFetched" />
+          <s:enumeration value="NullInsert" />
+          <s:enumeration value="Truncation" />
+        </s:restriction>
+      </s:simpleType>
+      <s:complexType name="ArrayOfOracleParameterStatus">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="OracleParameterStatus" type="tns:OracleParameterStatus" />
+        </s:sequence>
+      </s:complexType>
+      <s:simpleType name="OracleCollectionType">
+        <s:restriction base="s:string">
+          <s:enumeration value="None" />
+          <s:enumeration value="PLSQLAssociativeArray" />
+        </s:restriction>
+      </s:simpleType>
+      <s:element name="Perform_FA_ExecuteNonQueryResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="Perform_FA_ExecuteNonQueryResult" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="Perform_STG_ExecuteNonQuery">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="vSQL" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="vcommandtype" type="tns:CommandType" />
+            <s:element minOccurs="0" maxOccurs="1" name="parameters" type="tns:ArrayOfOracleParameter" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="Perform_STG_ExecuteNonQueryResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="Perform_STG_ExecuteNonQueryResult" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="Perform_STG_QueryPPSPictureQty">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="vLotid" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="vStepName" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="vMagazineNo" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="Perform_STG_QueryPPSPictureQtyResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="Perform_STG_QueryPPSPictureQtyResult" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="LinkTestSoapIn">
+    <wsdl:part name="parameters" element="tns:LinkTest" />
+  </wsdl:message>
+  <wsdl:message name="LinkTestSoapOut">
+    <wsdl:part name="parameters" element="tns:LinkTestResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetFAMachineTypeSoapIn">
+    <wsdl:part name="parameters" element="tns:GetFAMachineType" />
+  </wsdl:message>
+  <wsdl:message name="GetFAMachineTypeSoapOut">
+    <wsdl:part name="parameters" element="tns:GetFAMachineTypeResponse" />
+  </wsdl:message>
+  <wsdl:message name="PerForm_ASSY_QueryTableToXMLSoapIn">
+    <wsdl:part name="parameters" element="tns:PerForm_ASSY_QueryTableToXML" />
+  </wsdl:message>
+  <wsdl:message name="PerForm_ASSY_QueryTableToXMLSoapOut">
+    <wsdl:part name="parameters" element="tns:PerForm_ASSY_QueryTableToXMLResponse" />
+  </wsdl:message>
+  <wsdl:message name="Perform_ASSY_QueryTableToStringSoapIn">
+    <wsdl:part name="parameters" element="tns:Perform_ASSY_QueryTableToString" />
+  </wsdl:message>
+  <wsdl:message name="Perform_ASSY_QueryTableToStringSoapOut">
+    <wsdl:part name="parameters" element="tns:Perform_ASSY_QueryTableToStringResponse" />
+  </wsdl:message>
+  <wsdl:message name="Perform_ASSY_QueryMESStepNameSoapIn">
+    <wsdl:part name="parameters" element="tns:Perform_ASSY_QueryMESStepName" />
+  </wsdl:message>
+  <wsdl:message name="Perform_ASSY_QueryMESStepNameSoapOut">
+    <wsdl:part name="parameters" element="tns:Perform_ASSY_QueryMESStepNameResponse" />
+  </wsdl:message>
+  <wsdl:message name="Perform_ASSY_QueryMESLotStateSoapIn">
+    <wsdl:part name="parameters" element="tns:Perform_ASSY_QueryMESLotState" />
+  </wsdl:message>
+  <wsdl:message name="Perform_ASSY_QueryMESLotStateSoapOut">
+    <wsdl:part name="parameters" element="tns:Perform_ASSY_QueryMESLotStateResponse" />
+  </wsdl:message>
+  <wsdl:message name="PerForm_FA_QueryTableToXMLSoapIn">
+    <wsdl:part name="parameters" element="tns:PerForm_FA_QueryTableToXML" />
+  </wsdl:message>
+  <wsdl:message name="PerForm_FA_QueryTableToXMLSoapOut">
+    <wsdl:part name="parameters" element="tns:PerForm_FA_QueryTableToXMLResponse" />
+  </wsdl:message>
+  <wsdl:message name="Perform_FA_QueryTableToStringSoapIn">
+    <wsdl:part name="parameters" element="tns:Perform_FA_QueryTableToString" />
+  </wsdl:message>
+  <wsdl:message name="Perform_FA_QueryTableToStringSoapOut">
+    <wsdl:part name="parameters" element="tns:Perform_FA_QueryTableToStringResponse" />
+  </wsdl:message>
+  <wsdl:message name="Perform_FA_ExecuteNonQuerySoapIn">
+    <wsdl:part name="parameters" element="tns:Perform_FA_ExecuteNonQuery" />
+  </wsdl:message>
+  <wsdl:message name="Perform_FA_ExecuteNonQuerySoapOut">
+    <wsdl:part name="parameters" element="tns:Perform_FA_ExecuteNonQueryResponse" />
+  </wsdl:message>
+  <wsdl:message name="Perform_STG_ExecuteNonQuerySoapIn">
+    <wsdl:part name="parameters" element="tns:Perform_STG_ExecuteNonQuery" />
+  </wsdl:message>
+  <wsdl:message name="Perform_STG_ExecuteNonQuerySoapOut">
+    <wsdl:part name="parameters" element="tns:Perform_STG_ExecuteNonQueryResponse" />
+  </wsdl:message>
+  <wsdl:message name="Perform_STG_QueryPPSPictureQtySoapIn">
+    <wsdl:part name="parameters" element="tns:Perform_STG_QueryPPSPictureQty" />
+  </wsdl:message>
+  <wsdl:message name="Perform_STG_QueryPPSPictureQtySoapOut">
+    <wsdl:part name="parameters" element="tns:Perform_STG_QueryPPSPictureQtyResponse" />
+  </wsdl:message>
+  <wsdl:portType name="AutomationWebServiceSoap">
+    <wsdl:operation name="LinkTest">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">LinkTest</wsdl:documentation>
+      <wsdl:input message="tns:LinkTestSoapIn" />
+      <wsdl:output message="tns:LinkTestSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetFAMachineType">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Connect FA DataBase,Get Machine Type</wsdl:documentation>
+      <wsdl:input message="tns:GetFAMachineTypeSoapIn" />
+      <wsdl:output message="tns:GetFAMachineTypeSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="PerForm_ASSY_QueryTableToXML">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Connect ASSY DataBase,Query Table with Request SQL,Return xml format (client need Convert XML To DataTable)</wsdl:documentation>
+      <wsdl:input message="tns:PerForm_ASSY_QueryTableToXMLSoapIn" />
+      <wsdl:output message="tns:PerForm_ASSY_QueryTableToXMLSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="Perform_ASSY_QueryTableToString">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Connect ASSY DataBase,Query value with Request SQL,Return string</wsdl:documentation>
+      <wsdl:input message="tns:Perform_ASSY_QueryTableToStringSoapIn" />
+      <wsdl:output message="tns:Perform_ASSY_QueryTableToStringSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="Perform_ASSY_QueryMESStepName">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Connect ASSY DataBase,Query MES StepName with Lot</wsdl:documentation>
+      <wsdl:input message="tns:Perform_ASSY_QueryMESStepNameSoapIn" />
+      <wsdl:output message="tns:Perform_ASSY_QueryMESStepNameSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="Perform_ASSY_QueryMESLotState">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Connect ASSY DataBase,Query MES Lot State with Lot</wsdl:documentation>
+      <wsdl:input message="tns:Perform_ASSY_QueryMESLotStateSoapIn" />
+      <wsdl:output message="tns:Perform_ASSY_QueryMESLotStateSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="PerForm_FA_QueryTableToXML">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Connect FA DataBase,Query Table with Request SQL,Return xml format (client need Convert XML To DataTable)</wsdl:documentation>
+      <wsdl:input message="tns:PerForm_FA_QueryTableToXMLSoapIn" />
+      <wsdl:output message="tns:PerForm_FA_QueryTableToXMLSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="Perform_FA_QueryTableToString">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Connect FA DataBase,Query value with Request SQL,Return string</wsdl:documentation>
+      <wsdl:input message="tns:Perform_FA_QueryTableToStringSoapIn" />
+      <wsdl:output message="tns:Perform_FA_QueryTableToStringSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="Perform_FA_ExecuteNonQuery">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Connect FA DataBase,ExecuteNonQuery(Oracle.DataAccess.Client)</wsdl:documentation>
+      <wsdl:input message="tns:Perform_FA_ExecuteNonQuerySoapIn" />
+      <wsdl:output message="tns:Perform_FA_ExecuteNonQuerySoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="Perform_STG_ExecuteNonQuery">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Connect STG DataBase,ExecuteNonQuery(Oracle.DataAccess.Client)</wsdl:documentation>
+      <wsdl:input message="tns:Perform_STG_ExecuteNonQuerySoapIn" />
+      <wsdl:output message="tns:Perform_STG_ExecuteNonQuerySoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="Perform_STG_QueryPPSPictureQty">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Connect STG DataBase,Verify Picture is exist with Lotid + Stepname + MagazineNo</wsdl:documentation>
+      <wsdl:input message="tns:Perform_STG_QueryPPSPictureQtySoapIn" />
+      <wsdl:output message="tns:Perform_STG_QueryPPSPictureQtySoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="AutomationWebServiceSoap" type="tns:AutomationWebServiceSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="LinkTest">
+      <soap:operation soapAction="http://ASEKS.AutomationWebService.org/LinkTest" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetFAMachineType">
+      <soap:operation soapAction="http://ASEKS.AutomationWebService.org/GetFAMachineType" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PerForm_ASSY_QueryTableToXML">
+      <soap:operation soapAction="http://ASEKS.AutomationWebService.org/PerForm_ASSY_QueryTableToXML" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Perform_ASSY_QueryTableToString">
+      <soap:operation soapAction="http://ASEKS.AutomationWebService.org/Perform_ASSY_QueryTableToString" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Perform_ASSY_QueryMESStepName">
+      <soap:operation soapAction="http://ASEKS.AutomationWebService.org/Perform_ASSY_QueryMESStepName" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Perform_ASSY_QueryMESLotState">
+      <soap:operation soapAction="http://ASEKS.AutomationWebService.org/Perform_ASSY_QueryMESLotState" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PerForm_FA_QueryTableToXML">
+      <soap:operation soapAction="http://ASEKS.AutomationWebService.org/PerForm_FA_QueryTableToXML" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Perform_FA_QueryTableToString">
+      <soap:operation soapAction="http://ASEKS.AutomationWebService.org/Perform_FA_QueryTableToString" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Perform_FA_ExecuteNonQuery">
+      <soap:operation soapAction="http://ASEKS.AutomationWebService.org/Perform_FA_ExecuteNonQuery" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Perform_STG_ExecuteNonQuery">
+      <soap:operation soapAction="http://ASEKS.AutomationWebService.org/Perform_STG_ExecuteNonQuery" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Perform_STG_QueryPPSPictureQty">
+      <soap:operation soapAction="http://ASEKS.AutomationWebService.org/Perform_STG_QueryPPSPictureQty" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="AutomationWebServiceSoap12" type="tns:AutomationWebServiceSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="LinkTest">
+      <soap12:operation soapAction="http://ASEKS.AutomationWebService.org/LinkTest" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetFAMachineType">
+      <soap12:operation soapAction="http://ASEKS.AutomationWebService.org/GetFAMachineType" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PerForm_ASSY_QueryTableToXML">
+      <soap12:operation soapAction="http://ASEKS.AutomationWebService.org/PerForm_ASSY_QueryTableToXML" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Perform_ASSY_QueryTableToString">
+      <soap12:operation soapAction="http://ASEKS.AutomationWebService.org/Perform_ASSY_QueryTableToString" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Perform_ASSY_QueryMESStepName">
+      <soap12:operation soapAction="http://ASEKS.AutomationWebService.org/Perform_ASSY_QueryMESStepName" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Perform_ASSY_QueryMESLotState">
+      <soap12:operation soapAction="http://ASEKS.AutomationWebService.org/Perform_ASSY_QueryMESLotState" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PerForm_FA_QueryTableToXML">
+      <soap12:operation soapAction="http://ASEKS.AutomationWebService.org/PerForm_FA_QueryTableToXML" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Perform_FA_QueryTableToString">
+      <soap12:operation soapAction="http://ASEKS.AutomationWebService.org/Perform_FA_QueryTableToString" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Perform_FA_ExecuteNonQuery">
+      <soap12:operation soapAction="http://ASEKS.AutomationWebService.org/Perform_FA_ExecuteNonQuery" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Perform_STG_ExecuteNonQuery">
+      <soap12:operation soapAction="http://ASEKS.AutomationWebService.org/Perform_STG_ExecuteNonQuery" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Perform_STG_QueryPPSPictureQty">
+      <soap12:operation soapAction="http://ASEKS.AutomationWebService.org/Perform_STG_QueryPPSPictureQty" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="AutomationWebService">
+    <wsdl:port name="AutomationWebServiceSoap" binding="tns:AutomationWebServiceSoap">
+      <soap:address location="http://10.64.10.141:5100/AutomationWebService.asmx" />
+    </wsdl:port>
+    <wsdl:port name="AutomationWebServiceSoap12" binding="tns:AutomationWebServiceSoap12">
+      <soap12:address location="http://10.64.10.141:5100/AutomationWebService.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
