@@ -11,12 +11,6 @@
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
-<<<<<<< HEAD
-    <NuGetPackageImportStamp>
-    </NuGetPackageImportStamp>
-=======
-    <TargetFrameworkProfile />
->>>>>>> 133a56bd7ee1c8a92abb778e8aa00d23564e0114
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
