@@ -7,12 +7,15 @@ using System.IO.Ports;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using uPLibrary.Networking.M2Mqtt;
+using uPLibrary.Networking.M2Mqtt.Messages;
 
 namespace ESEC2008
 {
     public partial class ESEC2008 : Form
     {
 
+         
         public EqpCommForEsec2008 eqpCommForEsec2008=new EqpCommForEsec2008();
 
         public ESEC2008()
@@ -31,6 +34,34 @@ namespace ESEC2008
             connectionSetupCfg.Esec2008BarCodeScanerRs232 = "COM1,115200,8,None,One";
             eqpCommForEsec2008.Init();
             eqpCommForEsec2008.Start();
+
+
+
+            //MqttClient client = new MqttClient("127.0.0.1");
+            //client.Connect("mqttjs_a85b5ac486");
+
+            mqttcommon.ClientId = "TEST";
+            Transaction trans = new Transaction("2.1EQPStateChanged");
+            trans.Add("EQPID", "A2800-0015");
+            trans.Add("ControlState", "ON-line");
+            trans.Add("ProcessState", "START");
+ 
+            mqttcommon.SendMQTT(trans.CreateXMLstring());
+
+            //MqttClient client = new MqttClient("127.0.0.1");
+
+            //client.Connect("TEST");
+
+            
+            //mqttcommon.SendMQTT("Hello!");
+            //mqttcommon.Subscribe();
+            mqttcommon.SendMQTT("Hello!");
+
+            //mqttcommon.ClientId= "mqttjs_a85b5ac486";
+            //mqttcommon.hostIP = "127.0.0.1";
+            //mqttcommon.hostPort = "8083";
+            //mqttcommon.SendMQTT("Hello!");
+
         }
 
 
