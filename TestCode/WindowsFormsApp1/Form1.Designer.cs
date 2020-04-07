@@ -36,6 +36,7 @@
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
+            this.btnWCF = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btnClick
@@ -100,11 +101,22 @@
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
+            // btnWCF
+            // 
+            this.btnWCF.Location = new System.Drawing.Point(867, 265);
+            this.btnWCF.Name = "btnWCF";
+            this.btnWCF.Size = new System.Drawing.Size(117, 71);
+            this.btnWCF.TabIndex = 6;
+            this.btnWCF.Text = "WCF";
+            this.btnWCF.UseVisualStyleBackColor = true;
+            this.btnWCF.Click += new System.EventHandler(this.btnWCF_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1046, 538);
+            this.Controls.Add(this.btnWCF);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.txtLog);
@@ -127,6 +139,7 @@
         private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button btnWCF;
     }
 }
 

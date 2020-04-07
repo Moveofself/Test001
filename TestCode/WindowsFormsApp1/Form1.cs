@@ -21,6 +21,7 @@ using System.IO.Compression;
 using ICSharpCode.SharpZipLib.Zip;
 using ICSharpCode.SharpZipLib.GZip;
 using ICSharpCode.SharpZipLib.Tar;
+using MES.Proxy.MessageExchangeCenter;
 
 namespace TestForm
 {
@@ -68,8 +69,6 @@ namespace TestForm
                 }
 
 
-
-
             }
             catch (Exception ex)
             {
@@ -83,14 +82,13 @@ namespace TestForm
         {
             try
             {
-
-
                 ConfigurationManager.RefreshSection("appSettings");
                 int numThreads = int.Parse(ConfigurationManager.AppSettings["Number"]);
 
-                sss();
 
-                sss1();
+                //sss();
+
+                //sss1();
 
                 //txtShow.Text = "线程数：" + numThreads.ToString();
 
@@ -374,8 +372,39 @@ namespace TestForm
             return buff;
         }
 
+        public static void InitMesMessage(bool IsDB01)
+        {
+            try
+            {
+                _MessageExchangeServiceClient = new MessageExchangeServiceClient("NetTcpBinding_IMessageExchangeService");
+                EAPOutput output;
+
+                LotQueryInput lotQueryInput = new LotQueryInput();
+
+                EAPInput input = new EAPInput();
+ 
+
+                output = _MessageExchangeServiceClient.EAPRequest(input);
+
+ 
+
+            }
+            catch (Exception e)
+            {
+                e.Message.ToString();
+            }
+
+        }
+
+
+
+
+
+
+        public static MessageExchangeServiceClient _MessageExchangeServiceClient { get; set; }
         private void button2_Click(object sender, EventArgs e)
         {
+            InitMesMessage(true);
             //FileStream fs = null;
             //fs = new FileStream("D:\\CM700PP.txt", FileMode.OpenOrCreate, FileAccess.Read);
             //FileStream fs1 = new FileStream("D:\\Recipe\\BinFile", FileMode.OpenOrCreate, FileAccess.ReadWrite);
@@ -384,6 +413,7 @@ namespace TestForm
             //BinaryWriter bw = new BinaryWriter(fs1);
             try
             {
+
                 //String content = String.Empty;
                 //sr = new StreamReader(fs);
                 //string sss = sr.ReadToEnd().ToString();
@@ -395,8 +425,8 @@ namespace TestForm
                 //fs1.Close();
                 //解压缩
                 //UnZip("D:\\BinFile.gzip", "D:\\Recipe", "");
-                UnzipTgz("D:\\007332", @"D:\Recipe\007332");
-                txtLog.Text += "Sucess!";
+                //UnzipTgz("D:\\007332", @"D:\Recipe\007332");
+                //txtLog.Text += "Sucess!";
             }
             catch (Exception ex)
             {
@@ -650,5 +680,33 @@ namespace TestForm
             }
         }
 
+
+
+        private void btnWCF_Click(object sender, EventArgs e)
+        {
+            EAPOutput output = new EAPOutput();
+            string EquipmentId = "11";
+            string StripId = "I01855086";
+            string WaferId = "11";
+            string AoLotId = "WinForm";
+            string Source = "AutoTrackInOut";
+
+            LotQueryInput lotQueryInput = new LotQueryInput();
+
+            lotQueryInput.EquipmentId = EquipmentId;
+            lotQueryInput.StripId = StripId;
+            lotQueryInput.WaferId = WaferId;
+            lotQueryInput.LotId = AoLotId;
+            lotQueryInput.Source = Source;
+
+            MesMessage.InitMesMessage(true);
+
+            output = MesMessage.TransferData<LotQueryInput>(lotQueryInput);
+
+            MessageBox.Show(output.ErrCode + output.ENErrMsg);
+
+            //output.OutputMessage.ToString();
+
+        }
     }
 }

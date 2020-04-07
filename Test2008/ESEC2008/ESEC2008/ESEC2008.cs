@@ -31,7 +31,7 @@ namespace ESEC2008
         public void Initial()
         {
             connectionSetupCfg.Esec2008BoxRs232 = "COM2,9600,8,None,One";
-            connectionSetupCfg.Esec2008BarCodeScanerRs232 = "COM1,115200,8,None,One";
+            connectionSetupCfg.Esec2008BarCodeScanerRs232 = "COM5,115200,8,None,One";
             eqpCommForEsec2008.Init();
             eqpCommForEsec2008.Start();
 
