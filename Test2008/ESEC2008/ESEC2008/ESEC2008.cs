@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Configuration;
 using System.Data;
 using System.Drawing;
 using System.IO.Ports;
@@ -30,23 +31,31 @@ namespace ESEC2008
 
         public void Initial()
         {
-            connectionSetupCfg.Esec2008BoxRs232 = "COM2,9600,8,None,One";
-            connectionSetupCfg.Esec2008BarCodeScanerRs232 = "COM5,115200,8,None,One";
-            eqpCommForEsec2008.Init();
-            eqpCommForEsec2008.Start();
+            try
+            {
+                connectionSetupCfg.Esec2008BoxRs232 = ConfigurationManager.AppSettings["Esec2008BoxRs232"];
+                connectionSetupCfg.Esec2008BarCodeScanerRs232 = ConfigurationManager.AppSettings["Esec2008BarCodeScanerRs232"];
+                eqpCommForEsec2008.Init();
+                eqpCommForEsec2008.Start();
+            }
+            catch (Exception ex)
+            {
+                Log.Logger.InfoFormat("Error Info：{0}", ex.StackTrace);
+            }
+            
 
 
 
             //MqttClient client = new MqttClient("127.0.0.1");
             //client.Connect("mqttjs_a85b5ac486");
 
-            mqttcommon.ClientId = "TEST";
-            Transaction trans = new Transaction("2.1EQPStateChanged");
-            trans.Add("EQPID", "A2800-0015");
-            trans.Add("ControlState", "ON-line");
-            trans.Add("ProcessState", "START");
+            //mqttcommon.ClientId = "TEST";
+            //Transaction trans = new Transaction("2.1EQPStateChanged");
+            //trans.Add("EQPID", "A2800-0015");
+            //trans.Add("ControlState", "ON-line");
+            //trans.Add("ProcessState", "START");
  
-            mqttcommon.SendMQTT(trans.CreateXMLstring());
+            //mqttcommon.SendMQTT(trans.CreateXMLstring());
 
             //MqttClient client = new MqttClient("127.0.0.1");
 
@@ -55,7 +64,7 @@ namespace ESEC2008
             
             //mqttcommon.SendMQTT("Hello!");
             //mqttcommon.Subscribe();
-            mqttcommon.SendMQTT("Hello!");
+            //mqttcommon.SendMQTT("Hello!");
 
             //mqttcommon.ClientId= "mqttjs_a85b5ac486";
             //mqttcommon.hostIP = "127.0.0.1";
@@ -77,7 +86,6 @@ namespace ESEC2008
         {
             MessageBox.Show(msg, "提示信息");
         }
-
 
     }
 }

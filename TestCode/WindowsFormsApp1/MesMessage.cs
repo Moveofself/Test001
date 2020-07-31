@@ -15,11 +15,11 @@ namespace TestForm
 {
     public class MesMessage
     {
-        private static String EndpointConfigurationNameForDB01 = "NetTcpBinding_IMessageExchangeService";
-       
-        private  static readonly object SyncObj = new object();
+        private static String EndpointConfigurationNameForDB = "NetTcpBinding_IMessageExchangeService";
 
-        private static String EndpointConfigurationNameForDB02 = "NetTcpBinding_IMessageExchangeService";
+        private static readonly object SyncObj = new object();
+
+        private static String EndpointConfigurationNameForWB = "NetTcpBinding_IMessageExchangeService";
 
         /// <summary>
         /// DB01->true;DB02->false
@@ -31,33 +31,33 @@ namespace TestForm
             {
                 if (IsDB01)
                 {
-                   //var  binding=new NetTcpBinding();
-                   // binding.OpenTimeout=new TimeSpan(0,0,15);
-                   // binding.CloseTimeout=new TimeSpan(0,0,15);
-                   //  binding.ReceiveTimeout=new TimeSpan(0,0,15);
-                   //  binding.OpenTimeout=new TimeSpan(0,0,15);
-                   // binding.TransactionFlow=false;
-                   // binding.TransferMode=TransferMode.Streamed;
+                    //var  binding=new NetTcpBinding();
+                    // binding.OpenTimeout=new TimeSpan(0,0,15);
+                    // binding.CloseTimeout=new TimeSpan(0,0,15);
+                    //  binding.ReceiveTimeout=new TimeSpan(0,0,15);
+                    //  binding.OpenTimeout=new TimeSpan(0,0,15);
+                    // binding.TransactionFlow=false;
+                    // binding.TransferMode=TransferMode.Streamed;
 
-                   //binding.ReaderQuotas =new XmlDictionaryReaderQuotas();
-                   // binding.ReaderQuotas.MaxDepth=536870912;
-                   // binding.ReaderQuotas.MaxStringContentLength=2147483647 ;
-                   // binding.ReaderQuotas.MaxArrayLength=2147483647 ;
-                   // binding.ReaderQuotas.MaxBytesPerRead=536870912 ;
-                   // binding.ReaderQuotas.MaxNameTableCharCount=2147483647;
-                   // binding.ReliableSession=new OptionalReliableSession();            
-                   // binding.ReliableSession.Enabled=false;
-                   // binding.Security=new NetTcpSecurity();
-                   // binding.Security.Mode=SecurityMode.None;
-                    
+                    //binding.ReaderQuotas =new XmlDictionaryReaderQuotas();
+                    // binding.ReaderQuotas.MaxDepth=536870912;
+                    // binding.ReaderQuotas.MaxStringContentLength=2147483647 ;
+                    // binding.ReaderQuotas.MaxArrayLength=2147483647 ;
+                    // binding.ReaderQuotas.MaxBytesPerRead=536870912 ;
+                    // binding.ReaderQuotas.MaxNameTableCharCount=2147483647;
+                    // binding.ReliableSession=new OptionalReliableSession();            
+                    // binding.ReliableSession.Enabled=false;
+                    // binding.Security=new NetTcpSecurity();
+                    // binding.Security.Mode=SecurityMode.None;
 
-                    _MessageExchangeServiceClient = new MessageExchangeServiceClient(EndpointConfigurationNameForDB01);
-                  //  _MessageExchangeServiceClient = new MessageExchangeServiceClient(binding, new EndpointAddress(@"net.tcp://10.65.4.118:8899/MessageExchangeCenter/MessageExchangeService"));
+
+                    _MessageExchangeServiceClient = new MessageExchangeServiceClient(EndpointConfigurationNameForDB);
+                    //  _MessageExchangeServiceClient = new MessageExchangeServiceClient(binding, new EndpointAddress(@"net.tcp://10.65.4.118:8899/MessageExchangeCenter/MessageExchangeService"));
 
                 }
                 else
                 {
-                    _MessageExchangeServiceClient = new MessageExchangeServiceClient(EndpointConfigurationNameForDB02);
+                    _MessageExchangeServiceClient = new MessageExchangeServiceClient(EndpointConfigurationNameForWB);
 
                 }
             }
@@ -65,11 +65,11 @@ namespace TestForm
             {
                 //LogShown.RecordLog(string.Format("连接MES服务器初始化异常;{0}",e), LogLevel.Warn);
             }
-           
+
         }
 
         public static MessageExchangeServiceClient _MessageExchangeServiceClient { get; set; }
-        
+
         public static EAPOutput Send<T>(CommonInput inputObj) where T : CommonInput
         {
             EAPOutput output = new EAPOutput();
@@ -84,7 +84,7 @@ namespace TestForm
 
                     input.InputMessage = inputObj.GetInputMessage<T>((T)inputObj);
 
-                    Log.Logger.Info(String.Format("[ATS Request]:{0}", input.InputMessage));
+                    Log.Logger.Info(String.Format("[ATS Request]:" + "\r\n" + "{0}", input.InputMessage));
 
                     output = _MessageExchangeServiceClient.EAPRequest(input);
                     XDocument xdoc;
@@ -94,13 +94,13 @@ namespace TestForm
 
                         if (String.IsNullOrEmpty(output.OutputMessage)) throw new MessageIsEmptyException();
 
-                         xdoc = XDocument.Parse(output.OutputMessage);
+                        xdoc = XDocument.Parse(output.OutputMessage);
                         var formattedXml = (xdoc.Declaration != null ? xdoc.Declaration + "\r\n" : "") + xdoc.ToString();
-                        Log.Logger.InfoFormat("[MES Reply]:Message:{0}", formattedXml.ToString());
+                        Log.Logger.InfoFormat("[MES Reply]:Message:" + "\r\n" + "{0}", formattedXml.ToString());
                     }
                     catch (Exception e)
                     {
-                        Log.Logger.DebugFormat("[MES Reply]: OutputMessage: {0}",  output.OutputMessage);
+                        Log.Logger.DebugFormat("[MES Reply]: OutputMessage: {0}", output.OutputMessage);
 
                         throw e;
                     }
@@ -162,7 +162,7 @@ namespace TestForm
 
         public static EAPOutput TransferData<T>(CommonInput inputObj) where T : CommonInput
         {
-             EAPOutput output =new EAPOutput();
+            EAPOutput output = new EAPOutput();
             try
             {
                 lock (SyncObj)
@@ -180,16 +180,16 @@ namespace TestForm
                     {
                         Log.Logger.InfoFormat("[MES Reply]:ErrorCode: {0}, CnErrorText: {1}, EnErrorText: {2}", output.ErrCode, output.CNErrMsg, output.ENErrMsg);
 
-                         xdoc = XDocument.Parse(output.OutputMessage);
+                        xdoc = XDocument.Parse(output.OutputMessage);
                         var formattedXml = (xdoc.Declaration != null ? xdoc.Declaration + "\r\n" : "") + xdoc.ToString();
 
-                        Log.Logger.InfoFormat("[MES Reply]:Message:{0}", formattedXml.ToString());
+                        Log.Logger.InfoFormat("[MES Reply]:Message:" + "\r\n" + "{0}", formattedXml.ToString());
                     }
                     catch (Exception e)
                     {
-                        Log.Logger.InfoFormat("[MES Reply]: OutputMessage: {0}",  output.OutputMessage);
+                        Log.Logger.InfoFormat("[MES Reply]: OutputMessage: {0}", output.OutputMessage);
                         throw e;
-                     
+
                     }
                     String equipmentId = xdoc.Root.Element("EquipmentId").Value;
                     String transactionId = xdoc.Root.Element("TransactionId").Value;
@@ -247,9 +247,7 @@ namespace TestForm
 
             return output;
         }
-  
-    }
 
-        
+    }
 
 }

@@ -37,6 +37,15 @@
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.btnWCF = new System.Windows.Forms.Button();
+            this.lblStrip = new System.Windows.Forms.Label();
+            this.txtStrip = new System.Windows.Forms.TextBox();
+            this.txtLot = new System.Windows.Forms.TextBox();
+            this.txtEqp = new System.Windows.Forms.TextBox();
+            this.lblLot = new System.Windows.Forms.Label();
+            this.lblEqp = new System.Windows.Forms.Label();
+            this.button3 = new System.Windows.Forms.Button();
+            this.txtUser = new System.Windows.Forms.TextBox();
+            this.txtPWD = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // btnClick
@@ -71,7 +80,7 @@
             // 
             // txtLog
             // 
-            this.txtLog.Location = new System.Drawing.Point(170, 91);
+            this.txtLog.Location = new System.Drawing.Point(180, 73);
             this.txtLog.Multiline = true;
             this.txtLog.Name = "txtLog";
             this.txtLog.Size = new System.Drawing.Size(644, 331);
@@ -103,7 +112,7 @@
             // 
             // btnWCF
             // 
-            this.btnWCF.Location = new System.Drawing.Point(867, 265);
+            this.btnWCF.Location = new System.Drawing.Point(47, 440);
             this.btnWCF.Name = "btnWCF";
             this.btnWCF.Size = new System.Drawing.Size(117, 71);
             this.btnWCF.TabIndex = 6;
@@ -111,11 +120,98 @@
             this.btnWCF.UseVisualStyleBackColor = true;
             this.btnWCF.Click += new System.EventHandler(this.btnWCF_Click);
             // 
+            // lblStrip
+            // 
+            this.lblStrip.AutoSize = true;
+            this.lblStrip.Location = new System.Drawing.Point(206, 433);
+            this.lblStrip.Name = "lblStrip";
+            this.lblStrip.Size = new System.Drawing.Size(35, 12);
+            this.lblStrip.TabIndex = 7;
+            this.lblStrip.Text = "Strip";
+            // 
+            // txtStrip
+            // 
+            this.txtStrip.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.txtStrip.Location = new System.Drawing.Point(262, 426);
+            this.txtStrip.Name = "txtStrip";
+            this.txtStrip.Size = new System.Drawing.Size(205, 26);
+            this.txtStrip.TabIndex = 8;
+            // 
+            // txtLot
+            // 
+            this.txtLot.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.txtLot.Location = new System.Drawing.Point(262, 462);
+            this.txtLot.Name = "txtLot";
+            this.txtLot.Size = new System.Drawing.Size(205, 26);
+            this.txtLot.TabIndex = 9;
+            // 
+            // txtEqp
+            // 
+            this.txtEqp.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.txtEqp.Location = new System.Drawing.Point(262, 499);
+            this.txtEqp.Name = "txtEqp";
+            this.txtEqp.Size = new System.Drawing.Size(205, 26);
+            this.txtEqp.TabIndex = 10;
+            // 
+            // lblLot
+            // 
+            this.lblLot.AutoSize = true;
+            this.lblLot.Location = new System.Drawing.Point(206, 469);
+            this.lblLot.Name = "lblLot";
+            this.lblLot.Size = new System.Drawing.Size(23, 12);
+            this.lblLot.TabIndex = 11;
+            this.lblLot.Text = "Lot";
+            // 
+            // lblEqp
+            // 
+            this.lblEqp.AutoSize = true;
+            this.lblEqp.Location = new System.Drawing.Point(206, 506);
+            this.lblEqp.Name = "lblEqp";
+            this.lblEqp.Size = new System.Drawing.Size(23, 12);
+            this.lblEqp.TabIndex = 12;
+            this.lblEqp.Text = "Eqp";
+            // 
+            // button3
+            // 
+            this.button3.Location = new System.Drawing.Point(854, 255);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(116, 56);
+            this.button3.TabIndex = 13;
+            this.button3.Text = "button3";
+            this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
+            // 
+            // txtUser
+            // 
+            this.txtUser.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.txtUser.Location = new System.Drawing.Point(830, 326);
+            this.txtUser.Name = "txtUser";
+            this.txtUser.Size = new System.Drawing.Size(205, 26);
+            this.txtUser.TabIndex = 14;
+            // 
+            // txtPWD
+            // 
+            this.txtPWD.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.txtPWD.Location = new System.Drawing.Point(829, 369);
+            this.txtPWD.Name = "txtPWD";
+            this.txtPWD.PasswordChar = '*';
+            this.txtPWD.Size = new System.Drawing.Size(205, 26);
+            this.txtPWD.TabIndex = 15;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1046, 538);
+            this.Controls.Add(this.txtPWD);
+            this.Controls.Add(this.txtUser);
+            this.Controls.Add(this.button3);
+            this.Controls.Add(this.lblEqp);
+            this.Controls.Add(this.lblLot);
+            this.Controls.Add(this.txtEqp);
+            this.Controls.Add(this.txtLot);
+            this.Controls.Add(this.txtStrip);
+            this.Controls.Add(this.lblStrip);
             this.Controls.Add(this.btnWCF);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
@@ -140,6 +236,15 @@
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button btnWCF;
+        private System.Windows.Forms.Label lblStrip;
+        private System.Windows.Forms.TextBox txtStrip;
+        private System.Windows.Forms.TextBox txtLot;
+        private System.Windows.Forms.TextBox txtEqp;
+        private System.Windows.Forms.Label lblLot;
+        private System.Windows.Forms.Label lblEqp;
+        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.TextBox txtUser;
+        private System.Windows.Forms.TextBox txtPWD;
     }
 }
 

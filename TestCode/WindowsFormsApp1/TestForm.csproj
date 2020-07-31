@@ -75,6 +75,12 @@
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Cmf.Proxy.LightBusinessObjects.Assembly">
+      <HintPath>..\..\..\..\ATIO\Cmf.Proxy.LightBusinessObjects.Assembly.dll</HintPath>
+    </Reference>
+    <Reference Include="Cmf.Wpf.Toolkit">
+      <HintPath>..\..\..\..\ATIO\Cmf.Wpf.Toolkit.dll</HintPath>
+    </Reference>
     <Reference Include="DBUnity">
       <HintPath>..\..\Grid\Grid\DBUnity.dll</HintPath>
     </Reference>
@@ -103,6 +109,7 @@
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.OracleClient" />
+    <Reference Include="System.DirectoryServices" />
     <Reference Include="System.EnterpriseServices" />
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.ServiceModel.Channels" />
@@ -118,6 +125,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Authentication.cs" />
     <Compile Include="Common.cs" />
     <Compile Include="CommonInput.cs" />
     <Compile Include="CommonOutput.cs" />
@@ -136,6 +144,9 @@
     <Compile Include="MisMatchException.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="QueryStripInfo.cs" />
+    <Compile Include="RecordResultByStripInput.cs" />
+    <Compile Include="SecurityHelper.cs" />
     <Compile Include="Web References\WebReference\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

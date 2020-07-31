@@ -32,12 +32,12 @@
             this.serialPort1 = new System.IO.Ports.SerialPort(this.components);
             this.SuspendLayout();
             // 
-            // Form1
+            // ESEC2008
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(711, 297);
-            this.Name = "Form1";
+            this.ClientSize = new System.Drawing.Size(504, 265);
+            this.Name = "ESEC2008";
             this.Text = "Form1";
             this.ResumeLayout(false);
 

@@ -79,10 +79,10 @@ namespace Grid
 
             DateTime currentDt = DateTime.Now;
             Parallel.For(0, LogCount, e =>
-            {
                 //WriteLogTime("1");
-                WriteLog();
             });
+            //    WriteLog();
+            //});
 
             TimeSpan Span = DateTime.Now - currentDt;
 
@@ -769,7 +769,7 @@ namespace Grid
         }
 
 
-        private void OracleXML(string sName)
+        private void OracleXML(string sName,string sID="")
         {
             try
             {
@@ -782,7 +782,7 @@ namespace Grid
                 }
                 else
                 {
-                    sFilePath = "D:/" + sName + ".xml";
+                    sFilePath = "D:/Map/" + sName + ".xml";
                 }
 
                 //判断文件是否存在
@@ -800,13 +800,13 @@ namespace Grid
                 XmlDocument xe = new XmlDocument();
                 xe.Load(sFilePath);//加载XML文件
 
-                OracleConnection conn = new OracleConnection("Data Source = KS_QAS_AY; User Id = fa; Password = fa");
+                OracleConnection conn = new OracleConnection("Data Source = KS_PRD_AY; User Id = FA; Password = FA");
 
                 conn.Open();
                 OracleXmlType cxml = new OracleXmlType(conn, xe);
                 OracleCommand cmd = new OracleCommand();
                 cmd.Connection = conn;
-                cmd.CommandText = "INSERT INTO XMLCONTENT VALUES ('15',:pb)";
+                cmd.CommandText = "INSERT INTO MARKOUT_STRIPMAP VALUES ('"+ sID + "','" + sName + "',:pb)";
                 cmd.Parameters.Add("pb", OracleDbType.XmlType, 1).Value = cxml;
                 cmd.ExecuteNonQuery();
                 conn.Close();
@@ -955,7 +955,7 @@ namespace Grid
             textBox6.Text = "宽：" + doubleBufferDataGridView1.Width + "高：" + doubleBufferDataGridView1.Height;
             AllocConsole();
 
-            System.Threading.Timer RunTimer = new System.Threading.Timer(new TimerCallback(Print1), null, 0, 1000);
+            //System.Threading.Timer RunTimer = new System.Threading.Timer(new TimerCallback(Print1), null, 0, 1000);
 
         }
 
@@ -1187,6 +1187,11 @@ namespace Grid
                 result += Convert.ToString(bArr[i], 16).ToUpper().PadLeft(2, '0') + " ";
             }
             return result;
+        }
+
+        private void btnUploadXml_Click(object sender, EventArgs e)
+        {
+            OracleXML("B07787241", "A9869199.2D5454F1.E054001A.4B086AD0.00");
         }
 
 

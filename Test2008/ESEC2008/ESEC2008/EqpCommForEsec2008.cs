@@ -9,7 +9,6 @@ namespace ESEC2008
 {
     public class EqpCommForEsec2008 : EqpCommBase, IMessageProcessor
     {
-
         private BoxState boxState = BoxState.Reset;
         private Object handleMessageSyncObj = new object();
         private BoxRs232Driver boxRs232Driver;
@@ -46,8 +45,8 @@ namespace ESEC2008
 
         public override void Start()
         {
+        
             base.Start();
-
             boxRs232Driver.MessageProcessor = this;
             boxRs232Driver.Start();
             barCodeScanerRs232Driver.Start();
@@ -359,10 +358,11 @@ namespace ESEC2008
 
                     //if (result.StopEqp == false && !result.ErrorCode.Equals("200") && isStopping == false && !result.ErrorCode.Equals("230"))
                     //{
-                    //    if (boxState != BoxState.Reset)
+                    //  if (boxState != BoxState.Reset)
                     //    {
-                    //        ResetBox();
+                            ResetBox();
                     //    }
+
                     //}
                     //else
                     //{

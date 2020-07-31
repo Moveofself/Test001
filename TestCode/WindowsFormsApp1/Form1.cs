@@ -22,6 +22,8 @@ using ICSharpCode.SharpZipLib.Zip;
 using ICSharpCode.SharpZipLib.GZip;
 using ICSharpCode.SharpZipLib.Tar;
 using MES.Proxy.MessageExchangeCenter;
+using System.DirectoryServices;
+using Cmf.Foundation.Security;
 
 namespace TestForm
 {
@@ -31,6 +33,14 @@ namespace TestForm
         {
             InitializeComponent();
             Control.CheckForIllegalCrossThreadCalls = false;
+
+            #region ThreadPool
+
+            ThreadPool.SetMinThreads(5, 5);     //设置线程池最小线程数量为5
+            ThreadPool.SetMaxThreads(500, 500);   //设置线程池最大线程数量为80
+
+            #endregion
+
         }
 
         private void btnClick_Click(object sender, EventArgs e)
@@ -379,7 +389,7 @@ namespace TestForm
                 _MessageExchangeServiceClient = new MessageExchangeServiceClient("NetTcpBinding_IMessageExchangeService");
                 EAPOutput output;
 
-                LotQueryInput lotQueryInput = new LotQueryInput();
+                QueryStripInfo lotQueryInput = new QueryStripInfo();
 
                 EAPInput input = new EAPInput();
  
@@ -684,29 +694,138 @@ namespace TestForm
 
         private void btnWCF_Click(object sender, EventArgs e)
         {
-            EAPOutput output = new EAPOutput();
-            string EquipmentId = "11";
-            string StripId = "I01855086";
-            string WaferId = "11";
-            string AoLotId = "WinForm";
-            string Source = "AutoTrackInOut";
+            //EAPOutput output = new EAPOutput();
+            //string EquipmentId = "11";
+            //string StripId = "I01855086";
+            //string WaferId = "11";
+            //string AoLotId = "WinForm";
+            //string Source = "AutoTrackInOut";
 
-            LotQueryInput lotQueryInput = new LotQueryInput();
 
-            lotQueryInput.EquipmentId = EquipmentId;
-            lotQueryInput.StripId = StripId;
-            lotQueryInput.WaferId = WaferId;
-            lotQueryInput.LotId = AoLotId;
-            lotQueryInput.Source = Source;
+            //QueryStripInfo stripQuery = new QueryStripInfo();
 
+            //stripQuery.StripId = txtStrip.Text;
+            //stripQuery.LotId = txtLot.Text;
+            //stripQuery.EquipmentId = txtEqp.Text;
+
+
+            RecordResultByStripInput recordStrip = new RecordResultByStripInput();
+            recordStrip.EquipmentId = "TEST";
+            recordStrip.LotId = "RTC926N010.006";
+            recordStrip.MESCurrentStep = "STD_WireBond_Step";
+            recordStrip.StripRows = "8";
+            recordStrip.StripColumns = "28";
+            recordStrip.BinCodeSeparator = ",";
+            recordStrip.StripBinCodeMap = ".,.,.,.,.,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0;.,.,.,.,.,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0;.,.,.,.,.,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0;.,.,.,.,.,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0;.,.,.,.,.,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0;.,.,.,.,.,.,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0;.,.,.,.,.,.,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0;.,.,.,.,.,.,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0";
+            recordStrip.StripEqpBinCodeMap = "0086,0086,0086,0086,0086,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000;0086,0086,0086,0086,0086,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000;0086,0086,0086,0086,0086,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000;0086,0086,0086,0086,0086,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000;0086,0086,0086,0086,0086,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000;0086,0086,0086,0086,0086,0086,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000;0086,0086,0086,0086,0086,0086,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000;0086,0086,0086,0086,0086,0086,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000";
+            recordStrip.IgnoreStripEqpBinCode = "0000";
+            recordStrip.OutputMagazineId = "QQQQ";
+            string sStrip = "N080";
+            int j = 50000;
             MesMessage.InitMesMessage(true);
 
-            output = MesMessage.TransferData<LotQueryInput>(lotQueryInput);
 
-            MessageBox.Show(output.ErrCode + output.ENErrMsg);
+            for (int i = 0; i < 10000; i++)
+            {           
+                ThreadPool.QueueUserWorkItem(o =>
+                {
+                    recordStrip.StripId = sStrip + j.ToString();
+                    MesMessage.TransferData<RecordResultByStripInput>(recordStrip);
+                }
+                );
+                j++;
+            }
+
+
+            //LotQueryInput lotQueryInput = new LotQueryInput();
+
+            //lotQueryInput.EquipmentId = EquipmentId;
+            //lotQueryInput.StripId = StripId;
+            //lotQueryInput.WaferId = WaferId;
+            //lotQueryInput.LotId = AoLotId;
+            //lotQueryInput.Source = Source;
+
+            //MesMessage.InitMesMessage(true);
+            ////output = MesMessage.TransferData<QueryStripInfo>(stripQuery);
+
+            ////output = MesMessage.TransferData<LotQueryInput>(lotQueryInput);
+
+
+
+            //MessageBox.Show(output.ErrCode + output.ENErrMsg);
 
             //output.OutputMessage.ToString();
 
+            //new Thread(ThreadPoolFunction)
+            //{ IsBackground=true}.Start();
+
+        }
+        private void ThreadPoolFunction()
+        {
+            string sStrip = "N080";
+            int j = 50000;
+
+            EAPOutput output = new EAPOutput();
+            RecordResultByStripInput recordStrip = new RecordResultByStripInput();
+            recordStrip.EquipmentId ="TEST";
+            recordStrip.LotId = "RTC926N010.007";
+            recordStrip.MESCurrentStep = "STD_WireBond_Step";
+            recordStrip.StripRows = "8";
+            recordStrip.StripColumns = "28";
+            
+            recordStrip.BinCodeSeparator = ",";
+            recordStrip.StripBinCodeMap = ".,.,.,.,.,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0;.,.,.,.,.,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0;.,.,.,.,.,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0;.,.,.,.,.,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0;.,.,.,.,.,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0;.,.,.,.,.,.,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0;.,.,.,.,.,.,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0;.,.,.,.,.,.,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0";
+            recordStrip.StripEqpBinCodeMap = "0086,0086,0086,0086,0086,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000;0086,0086,0086,0086,0086,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000;0086,0086,0086,0086,0086,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000;0086,0086,0086,0086,0086,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000;0086,0086,0086,0086,0086,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000;0086,0086,0086,0086,0086,0086,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000;0086,0086,0086,0086,0086,0086,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000;0086,0086,0086,0086,0086,0086,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000,0000";
+            recordStrip.IgnoreStripEqpBinCode = "0000";
+            recordStrip.OutputMagazineId = "QQQQ";
+
+            MesMessage.InitMesMessage(true);
+            while (true)
+            {
+                for (int i = 0; i < 1000; i++)
+                {
+                    recordStrip.StripId = sStrip + j.ToString();
+                    output = MesMessage.TransferData<RecordResultByStripInput>(recordStrip);
+                    j++;
+                }
+                Thread.Sleep(50);
+            }
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            string DefaultDomain = "pssl";
+            string userName = txtUser.Text;
+            if (!userName.Contains("\\"))
+            {
+                userName = DefaultDomain + "\\" + userName;
+            }
+            string empty = string.Empty;
+            string text = ConfigurationManager.AppSettings["LDAPPath"];
+            if (string.IsNullOrEmpty(text))
+            {
+                MessageBox.Show("Config: [LDAPPath] is null or empry.");
+            }
+            try
+            {
+                DirectoryEntry directoryEntry = new DirectoryEntry(text, userName, txtPWD.Text, AuthenticationTypes.None);
+                directoryEntry.RefreshCache();
+
+                FunctionalityCollection userFunction = SecurityHelper.GetUserFunction(userName, out empty);
+
+                if (!string.IsNullOrEmpty(empty))
+                {
+                    MessageBox.Show(empty);
+                    return;
+                }
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show( ex.Message);
+            }
         }
     }
 }
+
+    
