@@ -78,9 +78,9 @@ namespace Grid
             }
 
             DateTime currentDt = DateTime.Now;
-            Parallel.For(0, LogCount, e =>
-                //WriteLogTime("1");
-            });
+            //Parallel.For(0, LogCount, e =>
+            //{
+            //    //WriteLogTime("1");
             //    WriteLog();
             //});
 
