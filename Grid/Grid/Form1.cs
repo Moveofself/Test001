@@ -18,7 +18,9 @@ using System.Configuration;
 using System.Threading;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
-
+using System.Text.RegularExpressions;
+using Eap.Equipment.Towa;
+using Eap.Equipment.Disco.Dfg8540;
 
 namespace Grid
 {
@@ -769,7 +771,7 @@ namespace Grid
         }
 
 
-        private void OracleXML(string sName,string sID="")
+        private void OracleXML(string sName, string sID = "")
         {
             try
             {
@@ -800,13 +802,13 @@ namespace Grid
                 XmlDocument xe = new XmlDocument();
                 xe.Load(sFilePath);//加载XML文件
 
-                OracleConnection conn = new OracleConnection("Data Source = KS_PRD_AY; User Id = FA; Password = FA");
+                OracleConnection conn = new OracleConnection("Data Source = KS_QAS_AY; User Id = FA; Password = FA");
 
                 conn.Open();
                 OracleXmlType cxml = new OracleXmlType(conn, xe);
                 OracleCommand cmd = new OracleCommand();
                 cmd.Connection = conn;
-                cmd.CommandText = "INSERT INTO MARKOUT_STRIPMAP VALUES ('"+ sID + "','" + sName + "',:pb)";
+                cmd.CommandText = "INSERT INTO MARKOUT_STRIPMAP VALUES ('" + sID + "','" + sName + "',:pb)";
                 cmd.Parameters.Add("pb", OracleDbType.XmlType, 1).Value = cxml;
                 cmd.ExecuteNonQuery();
                 conn.Close();
@@ -825,11 +827,14 @@ namespace Grid
             {
                 string sFilePath = "D:";
 
-                OracleConnection conn = new OracleConnection("Data Source = KS_QAS_AY; User Id = fa; Password = fa");
+                OracleConnection conn = new OracleConnection("Data Source = KS_PRD_AY; User Id = FA; Password = FA");
 
                 conn.Open();
-                string SQL = "SELECT KEYVALUE, XMLCOLUMN FROM  XMLCONTENT WHERE KEYVALUE='15'";
+                string SQL = " SELECT C.STRIPID, B.CDT, C.STRIPMAP, B.LOT, A.PLANQTY, B.HOSTNAME FROM FWASSY.FWCATNS_AOLOT A, FA.MARKOUT B, FA.MARKOUT_STRIPMAP C ";
+                SQL +=" WHERE B.CDT >= '20200918000000' AND B.CDT <= '20200928000000' AND A.AOLOT = B.LOT AND C.FROMID = B.TOID AND B.HOSTNAME IN ('A2800-0604', 'A2800-0274', 'A2800-0542')";
 
+                string sResult = "", sTemp = "";
+                bool bExist = false;
 
                 using (OracleCommand cmd = new OracleCommand(SQL, conn))
                 {
@@ -839,27 +844,28 @@ namespace Grid
                         DataTable dt = new DataTable();
                         da.Fill(dt);
 
-                        //while (reader.Read())
-                        //{
-                        //    //读取 XML 类型
-                        //    string sName= reader["KEYVALUE"].ToString();
+                        XmlDocument xmlDoc = new XmlDocument();
 
-                        //    string XML = reader["XMLCOLUMN"].ToString();
+                        for (int i = 0; i < dt.Rows.Count; i++)
+                        {
+                            bExist = false;
+                            //xmlDoc = new XmlDocument();
+                            string sMap = dt.Rows[i][2].ToString();
 
-                        //    StringReader Reader = new StringReader(XML);
+                            if (sMap.Contains("253") && (Regex.Matches(sMap, "253").Count - 1)>0)
+                            {
+                                bExist = true;
+                                sResult += dt.Rows[i][0].ToString() + "$" + dt.Rows[i][1].ToString() + "$"+  (Regex.Matches(sMap, "253").Count-1) + "#" + dt.Rows[i][3].ToString() + "#" + dt.Rows[i][4].ToString() + "#" + dt.Rows[i][5].ToString() + ";";
+                                
+                                //xmlDoc.LoadXml(sMap);
+                                //xmlDoc.Save("D:/StripMap/" + dt.Rows[i][0].ToString() + ".xml");
+                            }
 
-                        //    XmlDocument xmlDoc = new XmlDocument();
-
-                        //    xmlDoc.Load(Reader);
-
-                        //    xmlDoc.Save(sFilePath + "\\" + sName + ".xml");
-
-                        //}
-
+                        }
                     }
                 }
                 conn.Close();
-
+                WriteLogTime("Result"+sResult);
             }
             catch (Exception e)
             {
@@ -1191,7 +1197,30 @@ namespace Grid
 
         private void btnUploadXml_Click(object sender, EventArgs e)
         {
-            OracleXML("B07787241", "A9869199.2D5454F1.E054001A.4B086AD0.00");
+
+            OracleXML("B07968038", "ADBEE53E.25496FB4.E054001A.4B086AD0.00");
+
+        }
+
+        private void button10_Click(object sender, EventArgs e)
+        {
+
+            //RecipeParser parser = new RecipeParser();
+            //parser。ParseFromString
+
+
+
+            string sPath = @"D:\Recipe\Mold\TSSOP17320_0577";
+            if (!File.Exists(sPath))
+            {
+                return;
+            }
+
+            byte[] bRecipe = File.ReadAllBytes(sPath);
+
+            Eap.Equipment.Towa.RecipeParser parser = new Eap.Equipment.Towa.RecipeParser();
+            parser.ReadParameterAndValueFromFile(new MemoryStream(bRecipe));
+
         }
 
 

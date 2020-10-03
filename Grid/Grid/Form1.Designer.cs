@@ -69,6 +69,8 @@ namespace Grid
             this.textBox7 = new System.Windows.Forms.TextBox();
             this.serialPort1 = new System.IO.Ports.SerialPort(this.components);
             this.btnUploadXml = new System.Windows.Forms.Button();
+            this.button9 = new System.Windows.Forms.Button();
+            this.button10 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.doubleBufferDataGridView1)).BeginInit();
             this.SuspendLayout();
@@ -320,10 +322,31 @@ namespace Grid
             this.btnUploadXml.UseVisualStyleBackColor = true;
             this.btnUploadXml.Click += new System.EventHandler(this.btnUploadXml_Click);
             // 
+            // button9
+            // 
+            this.button9.Location = new System.Drawing.Point(1345, 285);
+            this.button9.Name = "button9";
+            this.button9.Size = new System.Drawing.Size(120, 37);
+            this.button9.TabIndex = 25;
+            this.button9.Text = "button9";
+            this.button9.UseVisualStyleBackColor = true;
+            // 
+            // button10
+            // 
+            this.button10.Location = new System.Drawing.Point(1396, 64);
+            this.button10.Name = "button10";
+            this.button10.Size = new System.Drawing.Size(69, 46);
+            this.button10.TabIndex = 26;
+            this.button10.Text = "button10";
+            this.button10.UseVisualStyleBackColor = true;
+            this.button10.Click += new System.EventHandler(this.button10_Click);
+            // 
             // Form1
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.ClientSize = new System.Drawing.Size(1589, 645);
+            this.Controls.Add(this.button10);
+            this.Controls.Add(this.button9);
             this.Controls.Add(this.btnUploadXml);
             this.Controls.Add(this.textBox7);
             this.Controls.Add(this.button8);
@@ -385,6 +408,8 @@ namespace Grid
         private TextBox textBox7;
         private System.IO.Ports.SerialPort serialPort1;
         private Button btnUploadXml;
+        private Button button9;
+        private Button button10;
     }
 }
 
